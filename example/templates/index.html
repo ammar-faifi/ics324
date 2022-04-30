@@ -1,7 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}  
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <!-- Page content -->
 <div class="w3-content" style="max-width: 1532px">
   <div class="w3-container w3-margin-top" id="rooms">
@@ -37,7 +34,11 @@
 
   <div class="w3-row-padding w3-padding-16">
     <div class="w3-third w3-margin-bottom">
-      <img src="{% static 'room_single.jpg' %}" alt="Norway" style="width: 100%" />
+      <img
+        src="{% static 'room_single.jpg' %}"
+        alt="Norway"
+        style="width: 100%"
+      />
       <div class="w3-container w3-white">
         <h3>Single Room</h3>
         <h6 class="w3-opacity">From $99</h6>
@@ -53,7 +54,11 @@
       </div>
     </div>
     <div class="w3-third w3-margin-bottom">
-      <img src="{% static 'room_double.jpg' %}" alt="Norway" style="width: 100%" />
+      <img
+        src="{% static 'room_double.jpg' %}"
+        alt="Norway"
+        style="width: 100%"
+      />
       <div class="w3-container w3-white">
         <h3>Double Room</h3>
         <h6 class="w3-opacity">From $149</h6>
@@ -69,7 +74,11 @@
       </div>
     </div>
     <div class="w3-third w3-margin-bottom">
-      <img src="{% static 'room_deluxe.jpg' %}" alt="Norway" style="width: 100%" />
+      <img
+        src="{% static 'room_deluxe.jpg' %}"
+        alt="Norway"
+        style="width: 100%"
+      />
       <div class="w3-container w3-white">
         <h3>Deluxe Room</h3>
         <h6 class="w3-opacity">From $199</h6>
@@ -147,11 +156,8 @@
   <div class="w3-row-padding w3-padding-16 w3-text-white w3-large">
     <div class="w3-half w3-margin-bottom">
       <div class="w3-display-container">
-        <img
-          src={% static "cinqueterre.jpg" %}
-          alt="Cinque Terre"
-          style="width: 100%"
-        />
+        <img src={% static "cinqueterre.jpg" %} alt="Cinque Terre" style="width:
+        100%" />
         <span class="w3-display-bottomleft w3-padding">Cinque Terre</span>
       </div>
     </div>
@@ -159,21 +165,15 @@
       <div class="w3-row-padding" style="margin: 0 -16px">
         <div class="w3-half w3-margin-bottom">
           <div class="w3-display-container">
-            <img
-              src={% static "newyork2.jpg" %}
-              alt="New York"
-              style="width: 100%"
-            />
+            <img src={% static "newyork2.jpg" %} alt="New York" style="width:
+            100%" />
             <span class="w3-display-bottomleft w3-padding">New York</span>
           </div>
         </div>
         <div class="w3-half w3-margin-bottom">
           <div class="w3-display-container">
-            <img
-              src={% static "sanfran.jpg" %}
-              alt="San Francisco"
-              style="width: 100%"
-            />
+            <img src={% static "sanfran.jpg" %} alt="San Francisco"
+            style="width: 100%" />
             <span class="w3-display-bottomleft w3-padding">San Francisco</span>
           </div>
         </div>
