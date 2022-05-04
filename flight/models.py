@@ -181,9 +181,10 @@ class Ticket(Model):
     class Meta:
         verbose_name = _("ticket")
         verbose_name_plural = _("tickets")
+        unique_together = ["seat_number", "flight"]
 
     checked_in = BooleanField(default=False)
-    seat_number = AutoField(unique=True)
+    seat_number = CharField(max_length=3)
     gate = CharField(max_length=50)
     class_ = CharField(max_length=50)
     weight = FloatField()
