@@ -9,6 +9,7 @@ CLASSES = [
     ("F", "First"),
 ]
 
+
 class Passenger(Model):
     """
     A model represents the entity of passenger.
@@ -38,7 +39,6 @@ class ClassInfo(Model):
         verbose_name = _("class info")
         verbose_name_plural = _("classes info")
 
-
     type = CharField(max_length=30, choices=CLASSES)
     total_seats = IntegerField()
     price = FloatField()
@@ -66,7 +66,7 @@ class Aircraft(Model):
 
 class HasClass(Model):
     """
-    This an intermediary model for m2m relation 
+    This an intermediary model for m2m relation
     between: Aircraft & ClassInfo.
     `id` is the primary key.
     """
@@ -114,6 +114,7 @@ class Flight(Model):
 
     plane = ForeignKey(Plane, on_delete=CASCADE)
 
+
 class WaitingList(Model):
     """
     A model represents the waiting_list entity type.
@@ -125,9 +126,8 @@ class WaitingList(Model):
         verbose_name_plural = _("waiting lists")
 
     passenger = ForeignKey(Passenger, on_delete=CASCADE)  # pssn
-    flight = ForeignKey(Flight, on_delete=CASCADE) # flight_code
+    flight = ForeignKey(Flight, on_delete=CASCADE)  # flight_code
     class_ = CharField(max_length=30, choices=CLASSES)
-
 
 
 class Payment(Model):
@@ -181,7 +181,9 @@ class Ticket(Model):
     class Meta:
         verbose_name = _("ticket")
         verbose_name_plural = _("tickets")
-        unique_together = ["seat_number", "flight"]
+        unique_together = [
+            ["seat_number", "flight"], # exactly one ticket for each seat in a flight
+        ]
 
     checked_in = BooleanField(default=False)
     seat_number = CharField(max_length=3)
