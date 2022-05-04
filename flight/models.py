@@ -127,7 +127,7 @@ class WaitingList(Model):
 
     passenger = ForeignKey(Passenger, on_delete=CASCADE)  # pssn
     flight = ForeignKey(Flight, on_delete=CASCADE)  # flight_code
-    class_ = CharField(max_length=30, choices=CLASSES)
+    class_type= CharField(max_length=30, choices=CLASSES)
 
 
 class Payment(Model):
@@ -188,7 +188,7 @@ class Ticket(Model):
     checked_in = BooleanField(default=False)
     seat_number = CharField(max_length=3)
     gate = CharField(max_length=50)
-    class_ = CharField(max_length=50)
+    class_type= CharField(max_length=50)
     weight = FloatField()
     volume = FloatField()
     qunatity = IntegerField()
