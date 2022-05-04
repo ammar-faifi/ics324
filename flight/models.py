@@ -48,7 +48,7 @@ class ClassInfo(Model):
     price = models.FloatField()
 
     def __str__(self):
-        return self
+        return f"{self.id} - {self.type}"
 
 
 class Aircraft(Model):
@@ -60,7 +60,7 @@ class Aircraft(Model):
     model = models.CharField(max_length=50, primary_key=True)
     type = models.CharField(max_length=50)
     class_info = models.ManyToManyField(
-        ClassInfo, through="HasClass", through_fields=("aircraft_model", "class_id")
+        ClassInfo, through="HasClass", through_fields=("aircraft", "class_info")
     )
 
     class Meta:
@@ -68,7 +68,7 @@ class Aircraft(Model):
         verbose_name_plural = _("aircrafts")
 
     def __str__(self):
-        return self.type
+        return f"{self.type} - {self.model}"
 
 
 class HasClass(Model):
@@ -78,11 +78,11 @@ class HasClass(Model):
     `id` is the primary key.
     """
 
-    aircraft_model = models.ForeignKey(Aircraft, on_delete=models.CASCADE)
-    class_id = models.ForeignKey(ClassInfo, on_delete=models.CASCADE)
+    aircraft = models.ForeignKey(Aircraft, on_delete=models.CASCADE)
+    class_info = models.ForeignKey(ClassInfo, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self
+        return f"{self.aircraft} - {self.class_info}"
 
 
 class Plane(Model):
@@ -103,7 +103,7 @@ class Plane(Model):
     model = models.ForeignKey(Aircraft, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Plane ID: {self.id}"
+        return f"ID: {self.id}"
 
 
 class Flight(Model):
@@ -143,7 +143,7 @@ class WaitingList(Model):
     class_type = models.CharField(max_length=30, choices=CLASSES)
 
     def __str__(self):
-        return self
+        return f"ID: {self.id} - Passenger: {self.passenger}"
 
 
 class Payment(Model):
@@ -159,7 +159,7 @@ class Payment(Model):
         verbose_name_plural = _("payments")
 
     def __str__(self):
-        return f"Payment ID: {self.id}"
+        return f"ID: {self.id}"
 
 
 class CashMethod(Model):
@@ -167,7 +167,7 @@ class CashMethod(Model):
     payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
-        return self
+        return f"For Payment: {self.payment}"
 
 
 class ApplePayMethod(Model):
@@ -177,7 +177,7 @@ class ApplePayMethod(Model):
     payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
-        return self
+        return self.payment
 
 
 class PaypalMethod(Model):
@@ -186,7 +186,7 @@ class PaypalMethod(Model):
     payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
-        return self
+        return self.payment
 
 
 class CreditCardMethod(Model):
@@ -197,7 +197,7 @@ class CreditCardMethod(Model):
     payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
-        return self
+        return self.payment
 
 
 class Ticket(Model):
@@ -229,4 +229,4 @@ class Ticket(Model):
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Ticket ID: {self.id} - Checked ID: {self.checked_in} - Class Type: {self.class_type}"
+        return f"Ticket ID: {self.id} - Checked In: {self.checked_in} - Class Type: {self.class_type}"
