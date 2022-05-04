@@ -7,6 +7,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link rel="stylesheet" href="{% static 'custom-styles.css' %}" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Raleway"
@@ -26,20 +27,18 @@
         font-family: "Raleway", Arial, Helvetica, sans-serif;
       }
     </style>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="w3-light-grey">
     <!-- Navigation Bar -->
-    <div class="w3-bar w3-white w3-large">
-      <a href="#" class="w3-bar-item w3-button w3-red w3-mobile"
-        ><i class="fa fa-bed w3-margin-right"></i>Logo</a
-      >
-      <a href="#rooms" class="w3-bar-item w3-button w3-mobile">Rooms</a>
-      <a href="#about" class="w3-bar-item w3-button w3-mobile">About</a>
-      <a href="#contact" class="w3-bar-item w3-button w3-mobile">Contact</a>
-      <a
-        href="#contact"
-        class="w3-bar-item w3-button w3-right w3-light-grey w3-mobile"
-        >Book Now</a
+    <div class="w3-bar w3-large bg-yellow-400">
+      <a href="/" class="w3-mobile text-6xl">
+        <span class="font-sans text-green-700">KFUPM</span>
+        <span class="text-3xl align-middle">Airlines</span>
+      </a>
+
+      <a href="/admin" class="w3-bar-item w3-button w3-right w3-mobile"
+        >Admin Login</a
       >
     </div>
     <!-- Header -->
@@ -125,15 +124,7 @@
         <i class="fa fa-twitter w3-hover-opacity"></i>
         <i class="fa fa-linkedin w3-hover-opacity"></i>
       </div>
-      <p>
-        Powered by
-        <a
-          href="https://www.w3schools.com/w3css/default.asp"
-          target="_blank"
-          class="w3-hover-text-green"
-          >w3.css</a
-        >
-      </p>
+      <p>Done by KFUPM Students</p>
     </footer>
 
     <!-- Add Google Maps -->
