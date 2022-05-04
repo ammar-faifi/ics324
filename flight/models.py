@@ -1,7 +1,7 @@
-from ast import For
-from re import L
 from django.utils.translation import gettext as _
-from django.db.models import *
+from django.db import models
+from django.db.models import Model
+
 
 CLASSES = [
     ("E", "Economy"),
@@ -20,13 +20,13 @@ class Passenger(Model):
         verbose_name = _("passenger")
         verbose_name_plural = _("passengers")
 
-    pssn = BigAutoField(primary_key=True)
-    first_name = CharField(max_length=30)
-    last_name = CharField(max_length=30)
-    birth_date = DateField(auto_now=False, auto_now_add=False)
-    phone = CharField(max_length=13)
-    address = CharField(max_length=50)
-    special_need = BooleanField()
+    pssn = models.BigAutoField(primary_key=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    birth_date = models.DateField(auto_now=False, auto_now_add=False)
+    phone = models.CharField(max_length=13)
+    address = models.CharField(max_length=50)
+    special_need = models.BooleanField()
 
 
 class ClassInfo(Model):
@@ -39,9 +39,9 @@ class ClassInfo(Model):
         verbose_name = _("class info")
         verbose_name_plural = _("classes info")
 
-    type = CharField(max_length=30, choices=CLASSES)
-    total_seats = IntegerField()
-    price = FloatField()
+    type = models.CharField(max_length=30, choices=CLASSES)
+    total_seats = models.IntegerField()
+    price = models.FloatField()
 
 
 class Aircraft(Model):
@@ -50,9 +50,9 @@ class Aircraft(Model):
     it has the field `model` as primary key.
     """
 
-    model = CharField(max_length=50, primary_key=True)
-    type = CharField(max_length=50)
-    class_info = ManyToManyField(
+    model = models.CharField(max_length=50, primary_key=True)
+    type = models.CharField(max_length=50)
+    class_info = models.ManyToManyField(
         ClassInfo, through="HasClass", through_fields=("aircraft_model", "class_id")
     )
 
@@ -71,8 +71,8 @@ class HasClass(Model):
     `id` is the primary key.
     """
 
-    aircraft_model = ForeignKey(Aircraft, on_delete=CASCADE)
-    class_id = ForeignKey(ClassInfo, on_delete=CASCADE)
+    aircraft_model = models.ForeignKey(Aircraft, on_delete=models.CASCADE)
+    class_id = models.ForeignKey(ClassInfo, on_delete=models.CASCADE)
 
 
 class Plane(Model):
@@ -85,12 +85,12 @@ class Plane(Model):
         verbose_name = _("plane")
         verbose_name_plural = _("planes")
 
-    first_flight = DateField(auto_now=False, auto_now_add=False)
-    total_seats = IntegerField()
-    last_maintenance = DateField(auto_now=False, auto_now_add=False)
-    next_maintenance = DateField(auto_now=False, auto_now_add=False)
+    first_flight = models.DateField(auto_now=False, auto_now_add=False)
+    total_seats = models.IntegerField()
+    last_maintenance = models.DateField(auto_now=False, auto_now_add=False)
+    next_maintenance = models.DateField(auto_now=False, auto_now_add=False)
 
-    model = ForeignKey(Aircraft, on_delete=CASCADE)
+    model = models.ForeignKey(Aircraft, on_delete=models.CASCADE)
 
     def __str__(self):
         return self
@@ -105,14 +105,14 @@ class Flight(Model):
     appropriate unique `flight_code`.
     """
 
-    code = CharField(max_length=10, primary_key=True)  # flight_code
-    date = DateField(auto_now=False, auto_now_add=False)  # flight_date
-    delay = DurationField()
-    destination = CharField(max_length=50)
-    source_city = CharField(max_length=50)
-    active = BooleanField()
+    code = models.CharField(max_length=10, primary_key=True)  # flight_code
+    date = models.DateField(auto_now=False, auto_now_add=False)  # flight_date
+    delay = models.DurationField()
+    destination = models.CharField(max_length=50)
+    source_city = models.CharField(max_length=50)
+    active = models.BooleanField()
 
-    plane = ForeignKey(Plane, on_delete=CASCADE)
+    plane = models.ForeignKey(Plane, on_delete=models.CASCADE)
 
 
 class WaitingList(Model):
@@ -125,9 +125,9 @@ class WaitingList(Model):
         verbose_name = _("waiting list")
         verbose_name_plural = _("waiting lists")
 
-    passenger = ForeignKey(Passenger, on_delete=CASCADE)  # pssn
-    flight = ForeignKey(Flight, on_delete=CASCADE)  # flight_code
-    class_type= CharField(max_length=30, choices=CLASSES)
+    passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)  # pssn
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE)  # flight_code
+    class_type= models.CharField(max_length=30, choices=CLASSES)
 
 
 class Payment(Model):
@@ -136,7 +136,7 @@ class Payment(Model):
     the primary key is the django default `id`
     """
 
-    tax = FloatField()
+    tax = models.FloatField()
 
     class Meta:
         verbose_name = _("payment method")
@@ -148,28 +148,28 @@ class Payment(Model):
 
 class CashMethod(Model):
 
-    payment = OneToOneField(Payment, on_delete=CASCADE, primary_key=True)
+    payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
 
 
 class ApplePayMethod(Model):
 
-    apple_id = IntegerField()
-    device = CharField(max_length=50)
-    payment = OneToOneField(Payment, on_delete=CASCADE, primary_key=True)
+    apple_id = models.IntegerField()
+    device = models.CharField(max_length=50)
+    payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
 
 
 class PaypalMethod(Model):
 
-    account_id = CharField(max_length=100)
-    payment = OneToOneField(Payment, on_delete=CASCADE, primary_key=True)
+    account_id = models.CharField(max_length=100)
+    payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
 
 
 class CreditCardMethod(Model):
 
-    name = CharField(max_length=100)
-    number = IntegerField()
-    expire_date = DateField(auto_now=False, auto_now_add=False)
-    payment = OneToOneField(Payment, on_delete=CASCADE, primary_key=True)
+    name = models.CharField(max_length=100)
+    number = models.IntegerField()
+    expire_date = models.DateField(auto_now=False, auto_now_add=False)
+    payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
 
 
 class Ticket(Model):
@@ -185,17 +185,17 @@ class Ticket(Model):
             ["seat_number", "flight"], # exactly one ticket for each seat in a flight
         ]
 
-    checked_in = BooleanField(default=False)
-    seat_number = CharField(max_length=3)
-    gate = CharField(max_length=50)
-    class_type= CharField(max_length=50)
-    weight = FloatField()
-    volume = FloatField()
-    qunatity = IntegerField()
-    successful = BooleanField()
-    purchase_date = DateField(auto_now=False, auto_now_add=True)
-    cost = FloatField()
+    checked_in = models.BooleanField(default=False)
+    seat_number = models.CharField(max_length=3)
+    gate = models.CharField(max_length=50)
+    class_type= models.CharField(max_length=50)
+    weight = models.FloatField()
+    volume = models.FloatField()
+    qunatity = models.IntegerField()
+    successful = models.BooleanField()
+    purchase_date = models.DateField(auto_now=False, auto_now_add=True)
+    cost = models.FloatField()
 
-    passenger = ForeignKey(Passenger, on_delete=CASCADE)  # pssn
-    transaction = ForeignKey(Payment, on_delete=CASCADE)
-    flight = ForeignKey(Flight, on_delete=CASCADE)
+    passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)  # pssn
+    transaction = models.ForeignKey(Payment, on_delete=models.CASCADE)
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
