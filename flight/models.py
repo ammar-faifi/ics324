@@ -53,7 +53,7 @@ class Aircraft(Model):
     model = CharField(max_length=50, primary_key=True)
     type = CharField(max_length=50)
     class_info = ManyToManyField(
-        ClassInfo, through="HasClass", through_fields=("class_id", "aircraft_model")
+        ClassInfo, through="HasClass", through_fields=("aircraft_model", "class_id")
     )
 
     class Meta:
