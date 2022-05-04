@@ -1,6 +1,7 @@
 from django.utils.translation import gettext as _
 from django.db import models
 from django.db.models import Model
+import datetime
 
 
 CLASSES = [
@@ -28,6 +29,9 @@ class Passenger(Model):
     address = models.CharField(max_length=50)
     special_need = models.BooleanField()
 
+    def __str__(self):
+        return self
+
 
 class ClassInfo(Model):
     """
@@ -42,6 +46,9 @@ class ClassInfo(Model):
     type = models.CharField(max_length=30, choices=CLASSES)
     total_seats = models.IntegerField()
     price = models.FloatField()
+
+    def __str__(self):
+        return self
 
 
 class Aircraft(Model):
@@ -74,6 +81,9 @@ class HasClass(Model):
     aircraft_model = models.ForeignKey(Aircraft, on_delete=models.CASCADE)
     class_id = models.ForeignKey(ClassInfo, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self
+
 
 class Plane(Model):
     """
@@ -93,7 +103,7 @@ class Plane(Model):
     model = models.ForeignKey(Aircraft, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self
+        return f"Plane ID: {self.id}"
 
 
 class Flight(Model):
@@ -107,12 +117,15 @@ class Flight(Model):
 
     code = models.CharField(max_length=10, primary_key=True)  # flight_code
     date = models.DateField(auto_now=False, auto_now_add=False)  # flight_date
-    delay = models.DurationField()
+    delay = models.DurationField(blank=True, default=datetime.timedelta())
     destination = models.CharField(max_length=50)
     source_city = models.CharField(max_length=50)
     active = models.BooleanField()
 
     plane = models.ForeignKey(Plane, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self
 
 
 class WaitingList(Model):
@@ -129,6 +142,9 @@ class WaitingList(Model):
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)  # flight_code
     class_type = models.CharField(max_length=30, choices=CLASSES)
 
+    def __str__(self):
+        return self
+
 
 class Payment(Model):
     """
@@ -143,12 +159,15 @@ class Payment(Model):
         verbose_name_plural = _("payment methods")
 
     def __str__(self):
-        return self.name
+        return f"Payment ID: {self.id}"
 
 
 class CashMethod(Model):
 
     payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
+
+    def __str__(self):
+        return self
 
 
 class ApplePayMethod(Model):
@@ -157,11 +176,17 @@ class ApplePayMethod(Model):
     device = models.CharField(max_length=50)
     payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
 
+    def __str__(self):
+        return self
+
 
 class PaypalMethod(Model):
 
     account_id = models.CharField(max_length=100)
     payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
+
+    def __str__(self):
+        return self
 
 
 class CreditCardMethod(Model):
@@ -170,6 +195,9 @@ class CreditCardMethod(Model):
     number = models.IntegerField()
     expire_date = models.DateField(auto_now=False, auto_now_add=False)
     payment = models.OneToOneField(Payment, on_delete=models.CASCADE, primary_key=True)
+
+    def __str__(self):
+        return self
 
 
 class Ticket(Model):
@@ -199,3 +227,6 @@ class Ticket(Model):
     passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)  # pssn
     transaction = models.ForeignKey(Payment, on_delete=models.CASCADE)
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self
