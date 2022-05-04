@@ -20,7 +20,7 @@ class Passenger(Model):
         verbose_name = _("passenger")
         verbose_name_plural = _("passengers")
 
-    pssn = BigAutoField(max_length=10, primary_key=True)
+    pssn = BigAutoField(primary_key=True)
     first_name = CharField(max_length=30)
     last_name = CharField(max_length=30)
     birth_date = DateField(auto_now=False, auto_now_add=False)
@@ -148,20 +148,20 @@ class Payment(Model):
 
 class CashMethod(Model):
 
-    payment = ForeignKey(Payment, on_delete=CASCADE, primary_key=True)
+    payment = OneToOneField(Payment, on_delete=CASCADE, primary_key=True)
 
 
 class ApplePayMethod(Model):
 
     apple_id = IntegerField()
     device = CharField(max_length=50)
-    payment = ForeignKey(Payment, on_delete=CASCADE, primary_key=True)
+    payment = OneToOneField(Payment, on_delete=CASCADE, primary_key=True)
 
 
 class PaypalMethod(Model):
 
     account_id = CharField(max_length=100)
-    payment = ForeignKey(Payment, on_delete=CASCADE, primary_key=True)
+    payment = OneToOneField(Payment, on_delete=CASCADE, primary_key=True)
 
 
 class CreditCardMethod(Model):
@@ -169,7 +169,7 @@ class CreditCardMethod(Model):
     name = CharField(max_length=100)
     number = IntegerField()
     expire_date = DateField(auto_now=False, auto_now_add=False)
-    payment = ForeignKey(Payment, on_delete=CASCADE, primary_key=True)
+    payment = OneToOneField(Payment, on_delete=CASCADE, primary_key=True)
 
 
 class Ticket(Model):
@@ -194,7 +194,7 @@ class Ticket(Model):
     qunatity = IntegerField()
     successful = BooleanField()
     purchase_date = DateField(auto_now=False, auto_now_add=True)
-    amount = FloatField()
+    cost = FloatField()
 
     passenger = ForeignKey(Passenger, on_delete=CASCADE)  # pssn
     transaction = ForeignKey(Payment, on_delete=CASCADE)
