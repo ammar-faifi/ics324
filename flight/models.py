@@ -71,8 +71,8 @@ class HasClass(Model):
     `id` is the primary key.
     """
 
-    aircraft_model = ForeignKey(Aircraft)
-    class_id = ForeignKey(ClassInfo)
+    aircraft_model = ForeignKey(Aircraft, on_delete=CASCADE)
+    class_id = ForeignKey(ClassInfo, on_delete=CASCADE)
 
 
 class Plane(Model):
@@ -146,25 +146,25 @@ class Payment(Model):
         return self.name
 
 
-class CashMehothod(Model):
+class CashMethod(Model):
 
     payment = ForeignKey(Payment, on_delete=CASCADE, primary_key=True)
 
 
-class ApplePayMehothod(Model):
+class ApplePayMethod(Model):
 
     apple_id = IntegerField()
     device = CharField(max_length=50)
     payment = ForeignKey(Payment, on_delete=CASCADE, primary_key=True)
 
 
-class PaypalMehothod(Model):
+class PaypalMethod(Model):
 
     account_id = CharField(max_length=100)
     payment = ForeignKey(Payment, on_delete=CASCADE, primary_key=True)
 
 
-class CreditCardMehothod(Model):
+class CreditCardMethod(Model):
 
     name = CharField(max_length=100)
     number = IntegerField()
