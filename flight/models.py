@@ -125,7 +125,7 @@ class WaitingList(Model):
         verbose_name_plural = _("waiting lists")
 
     passenger = ForeignKey(Passenger, on_delete=CASCADE)  # pssn
-    flight = ForeignKey(Flight, ) # flight_code
+    flight = ForeignKey(Flight, on_delete=CASCADE) # flight_code
     class_ = CharField(max_length=30, choices=CLASSES)
 
 
