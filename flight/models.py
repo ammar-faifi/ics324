@@ -30,7 +30,7 @@ class Passenger(Model):
     special_need = models.BooleanField()
 
     def __str__(self):
-        return self
+        return f"pssn: {self.pssn} - {self.first_name}"
 
 
 class ClassInfo(Model):
@@ -125,7 +125,7 @@ class Flight(Model):
     plane = models.ForeignKey(Plane, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self
+        return f"Flight Code: {self.code}"
 
 
 class WaitingList(Model):
@@ -155,8 +155,8 @@ class Payment(Model):
     tax = models.FloatField()
 
     class Meta:
-        verbose_name = _("payment method")
-        verbose_name_plural = _("payment methods")
+        verbose_name = _("payment")
+        verbose_name_plural = _("payments")
 
     def __str__(self):
         return f"Payment ID: {self.id}"
@@ -216,7 +216,7 @@ class Ticket(Model):
     checked_in = models.BooleanField(default=False)
     seat_number = models.CharField(max_length=3)
     gate = models.CharField(max_length=50)
-    class_type = models.CharField(max_length=50)
+    class_type = models.CharField(max_length=50, choices=CLASSES)
     weight = models.FloatField()
     volume = models.FloatField()
     qunatity = models.IntegerField()
@@ -229,4 +229,4 @@ class Ticket(Model):
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self
+        return f"Ticket ID: {self.id} - Checked ID: {self.checked_in} - Class Type: {self.class_type}"
