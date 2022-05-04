@@ -127,7 +127,7 @@ class WaitingList(Model):
 
     passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)  # pssn
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)  # flight_code
-    class_type= models.CharField(max_length=30, choices=CLASSES)
+    class_type = models.CharField(max_length=30, choices=CLASSES)
 
 
 class Payment(Model):
@@ -182,13 +182,13 @@ class Ticket(Model):
         verbose_name = _("ticket")
         verbose_name_plural = _("tickets")
         unique_together = [
-            ["seat_number", "flight"], # exactly one ticket for each seat in a flight
+            ["seat_number", "flight"],  # exactly one ticket for each seat in a flight
         ]
 
     checked_in = models.BooleanField(default=False)
     seat_number = models.CharField(max_length=3)
     gate = models.CharField(max_length=50)
-    class_type= models.CharField(max_length=50)
+    class_type = models.CharField(max_length=50)
     weight = models.FloatField()
     volume = models.FloatField()
     qunatity = models.IntegerField()
