@@ -23,8 +23,8 @@ class CheckBooking(TemplateView):
 
     def get(self, request:HttpRequest):
         print(request.GET)
-        return render(request, 'flight/index.html')
+        return render(request, 'flight/booking.html')
 
     def post(self, request:HttpRequest):
         print(request.POST)
-        return render(request, 'flight/index.html')
+        return render(request, 'flight/booking.html')
