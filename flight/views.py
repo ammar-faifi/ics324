@@ -1,6 +1,7 @@
 from typing import Any, Dict
 from django.shortcuts import render
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, View
+from django.http.request import HttpRequest
 
 # Create your views here.
 
@@ -15,7 +16,15 @@ class IndexView(TemplateView):
         return context
 
 
-def check_booking(request):
-    print(request)
-    print(request.DATA)
-    return
+class CheckBooking(TemplateView):
+
+    template_name = "flight/index.html"
+
+
+    def get(self, request:HttpRequest):
+        print(request.GET)
+        return render(request, 'flight/index.html')
+
+    def post(self, request:HttpRequest):
+        print(request.POST)
+        return render(request, 'flight/index.html')
