@@ -1,6 +1,4 @@
-{% extends 'base.html' %} 
-{% load static %} 
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <header class="w3-display-container w3-content" style="max-width: 1500px">
   <img
     class="w3-image"
@@ -31,36 +29,54 @@
             />
           </div>
           <div class="w3-half">
-            <label> Source City</label>
-            <input
-              class="w3-input w3-border"
-              type="list"
-              name="SourceCity"
-              required
-            />
+            <label for="source-city">Source City</label>
+            <select
+              name="source-city"
+              id="source-city"
+              class="border-solid border-2 rounded border-black"
+            >
+              <option value="Jeddah">Jeddah</option>
+              <option value="Riyadh">Riyadh</option>
+              <option value="Dammam">Dammam</option>
+              <option value="Abha">Abha</option>
+            </select>
+            <br></br>
+            <label for="dest-city">Destination City</label>
+            <select
+              name="dest-city"
+              id="dest-city"
+              class="border-solid border-2 rounded border-black"
+            >
+              <option value="Jeddah">Jeddah</option>
+              <option value="Riyadh">Riyadh</option>
+              <option value="Dammam">Dammam</option>
+              <option value="Abha">Abha</option>
+            </select>
+
+            <br></br>
+            <label for="ticket-class">Class</label>
+            <select
+              name="ticket-class"
+              id="ticket-class"
+              class="border-solid border-2 rounded border-black"
+            >
+              <option value="Jeddah">Economy</option>
+              <option value="Riyadh">Business</option>
+              <option value="Dammam">First</option>
+            </select>
+
           </div>
         </div>
         <div class="w3-row-padding" style="margin: 8px -16px">
-          <div class="w3-half w3-margin-bottom">
-            <label><i class="fa fa-male"></i> Adults</label>
-            <input
-              class="w3-input w3-border"
-              type="number"
-              value="1"
-              name="Adults"
-              min="1"
-              max="6"
-            />
-          </div>
           <div class="w3-half">
-            <label><i class="fa fa-child"></i> Kids</label>
+            <label> Number of Passengers</label>
             <input
               class="w3-input w3-border"
               type="number"
               value="0"
-              name="Kids"
+              name="passenger"
               min="0"
-              max="6"
+              max="10"
             />
           </div>
         </div>
