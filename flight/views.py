@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.views.generic.base import TemplateView, View
 from django.http.request import HttpRequest
 from . import models
+from data import cities
 
 
 
@@ -15,6 +16,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
+        context['cities'] = cities
         return context
 
 
@@ -40,4 +42,4 @@ def get_cities(request: HttpRequest):
         soure_cities = models.Flight.objects.filter(destination=source).values_list('source_city', flat=True)
         return JsonResponse(list(soure_cities), safe=False)
     else:
-        return Http404(request)
+        return JsonResponse(cities, safe=False)
