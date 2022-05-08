@@ -1,6 +1,7 @@
+from array import array
 from typing import Any, Dict
 
-from django.http import HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import render
 from django.views.generic.base import TemplateView, View
 from django.http.request import HttpRequest
@@ -28,8 +29,7 @@ class SearchFlight(View):
         return render(request, 'flight/booking.html')
 
 
-def get_arrival_cities(request: HttpRequest):
-
-    flight = models.Flight.objects.all()
-
-    return flight
+def get_cities(request: HttpRequest):
+    source = request.POST.get('source_city')
+    arrival_cities = models.Flight.objects.filter(source_city=source).values_list('destination', flat=True)
+    return JsonResponse(list(arrival_cities))

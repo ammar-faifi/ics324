@@ -6,5 +6,6 @@ app_name = 'flight'
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
-    path('search_flight', views.SearchFlight.as_view(), name='search_flight')
+    path('search_flight', views.SearchFlight.as_view(), name='search_flight'),
+    path('get_cities', views.get_cities, name='get_cities'),
 ]
