@@ -29,6 +29,7 @@
               name="source_city"
               id="source_city"
               class="border-solid border-2 rounded border-black"
+              required
             >
               <option value="">Select a city</option>
               {% for code, city in cities %}
@@ -41,6 +42,7 @@
               name="dest_city"
               id="dest_city"
               class="border-solid border-2 rounded border-black"
+              required
             >
               <option value="">Select a city</option>
               {% for code, city in cities %}
@@ -57,10 +59,10 @@
             <input
               class="w3-input w3-border"
               type="number"
-              value="0"
               name="passenger"
               min="0"
               max="10"
+              required
             />
           </div>
         </div>
