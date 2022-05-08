@@ -1,7 +1,7 @@
 from array import array
 from typing import Any, Dict
 
-from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
+from django.http import Http404, HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import render
 from django.views.generic.base import TemplateView, View
 from django.http.request import HttpRequest
@@ -30,6 +30,14 @@ class SearchFlight(View):
 
 
 def get_cities(request: HttpRequest):
-    source = request.POST.get('source_city')
-    arrival_cities = models.Flight.objects.filter(source_city=source).values_list('destination', flat=True)
-    return JsonResponse(list(arrival_cities))
+    source = request.POST.get('source_city', '')
+    arrival = request.POST.get('dest_city', '')
+
+    if source:
+        arrival_cities = models.Flight.objects.filter(source_city=source).values_list('destination', flat=True)
+        return JsonResponse(list(arrival_cities), safe=False)
+    elif arrival:
+        soure_cities = models.Flight.objects.filter(destination=source).values_list('source_city', flat=True)
+        return JsonResponse(list(soure_cities), safe=False)
+    else:
+        return Http404(request)
