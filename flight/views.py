@@ -1,9 +1,10 @@
 from typing import Any, Dict
+
+from django.http import HttpResponseNotAllowed
 from django.shortcuts import render
 from django.views.generic.base import TemplateView, View
 from django.http.request import HttpRequest
 
-# Create your views here.
 
 
 class IndexView(TemplateView):
@@ -12,18 +13,14 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["test_var"] = "this a test var"
         return context
 
 
-class CheckBooking(TemplateView):
+class SearchFlight(View):
 
-    template_name = "flight/index.html"
+    http_method_names = View.http_method_names.copy()
+    http_method_names.remove('get')
 
-
-    def get(self, request:HttpRequest):
-        print(request.GET)
-        return render(request, 'flight/booking.html')
 
     def post(self, request:HttpRequest):
         print(request.POST)

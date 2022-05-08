@@ -10,7 +10,8 @@
       <h2>Book a flight</h2>
     </div>
     <div class="w3-container w3-white w3-padding-16">
-      <form action="/action_page.php">
+      <form action="{% url 'flight:search_flight' %}" method='post'>
+        {% csrf_token %}
         <div class="w3-row-padding" style="margin: 0 -16px">
           <div class="w3-half w3-margin-bottom">
             <label> Depature Date</label>
@@ -47,17 +48,6 @@
               <option value="Abha">Abha</option>
             </select>
 
-            <br></br>
-            <label for="ticket-class">Class</label>
-            <select
-              name="ticket-class"
-              id="ticket-class"
-              class="border-solid border-2 rounded border-black"
-            >
-              <option value="Jeddah">Economy</option>
-              <option value="Riyadh">Business</option>
-              <option value="Dammam">First</option>
-            </select>
 
           </div>
         </div>
@@ -86,7 +76,7 @@
       <h2>Check Booking Status</h2>
     </div>
     <div class="w3-container w3-white w3-padding-16">
-      <form action="{% url 'flight:check_booking' %}">
+      <form action="">
         <div class="w3-row-padding" style="margin: 0 -16px">
           <div class="w3-half w3-margin-bottom">
             <label>Booking ID</label>
