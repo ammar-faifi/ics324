@@ -17,9 +17,9 @@
             <label> Depature Date</label>
             <input
               class="w3-input w3-border"
-              type="text"
+              type="date"
               placeholder="DD MM YYYY"
-              name="Depature"
+              name="date"
               required
             />
           </div>
@@ -30,10 +30,10 @@
               id="source_city"
               class="border-solid border-2 rounded border-black"
             >
-              <option value="Jeddah">Jeddah</option>
-              <option value="Riyadh">Riyadh</option>
-              <option value="DMM">Dammam</option>
-              <option value="ABH">Abha</option>
+              <option value="">Select a city</option>
+              {% for code, city in cities %}
+                <option value="{{ code }}">{{ city }}</option>
+              {% endfor %}
             </select>
             <br></br>
             <label for="dest-city">Destination City</label>
@@ -42,10 +42,10 @@
               id="dest_city"
               class="border-solid border-2 rounded border-black"
             >
-              <option value="Jeddah">Jeddah</option>
-              <option value="Riyadh">Riyadh</option>
-              <option value="Dammam">Dammam</option>
-              <option value="Abha">Abha</option>
+              <option value="">Select a city</option>
+              {% for code, city in cities %}
+                <option value="{{ code }}">{{ city }}</option>
+              {% endfor %}              
             </select>
 
 
