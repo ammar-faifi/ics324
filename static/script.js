@@ -8,14 +8,12 @@ $(() => {
       url: "/flight/get_cities",
       data: form.serialize(),
       success: function (data) {
-        console.log(data);
-        $("#dest_city").removeAttr("disabled");
-        let a = [
-          ["a", "b"],
-          ["as", "fd"],
-        ];
-        a.map((data) => {
-          $("#dest_city").append(new Option(data[0], data[1]));
+        $("#dest_city").empty();
+        $("#dest_city").append(new Option("Select a city", ""));
+
+        data.map((el) => {
+          console.log(el);
+          $("#dest_city").append(new Option(el.city, el.code));
         });
       },
       error: function (data) {

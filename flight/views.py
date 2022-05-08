@@ -35,11 +35,18 @@ def get_cities(request: HttpRequest):
     source = request.POST.get('source_city', '')
     arrival = request.POST.get('dest_city', '')
 
+    cities_list = []
     if source:
-        arrival_cities = models.Flight.objects.filter(source_city=source).values_list('destination', flat=True)
-        return JsonResponse(list(arrival_cities), safe=False)
+        arrival_cities = models.Flight.objects.filter(source_city=source).only('destination')
+        for q in arrival_cities:
+            cities_list.append({'code': q.destination, 'city': q.get_destination_display()})
+        return JsonResponse(cities_list, safe=False)
+    
     elif arrival:
         soure_cities = models.Flight.objects.filter(destination=source).values_list('source_city', flat=True)
-        return JsonResponse(list(soure_cities), safe=False)
+        for q in soure_cities:
+            cities_list.append({'code': q.source_city, 'city': q.get_source_city_display()})
+        return JsonResponse(cities_list, safe=False)
+    
     else:
         return JsonResponse(cities, safe=False)
