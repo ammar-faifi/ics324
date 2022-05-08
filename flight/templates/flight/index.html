@@ -1,17 +1,9 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
-<header class="w3-display-container w3-content" style="max-width: 1500px">
-  <img
-    class="w3-image"
-    src="{% static 'hotel.jpg' %}"
-    alt="The Hotel"
-    style="min-width: 1000px"
-    width="1500"
-    height="800"
-  />
-  <!--
+<div class="bg-[url('{% static 'airplane.jpg' %}')] bg-scroll	bg-cover	">
+ <!--
     Book a flight
   -->
-  <div class="w3-display-left w3-padding w3-col l6 m8">
+  <div class="p-28">
     <div class="w3-container w3-red">
       <h2>Book a flight</h2>
     </div>
@@ -87,7 +79,7 @@
     </div>
   </div>
   <!-- Check Booking -->
-  <div class="w3-display-right w3-padding w3-col l6 m8">
+  <div class="p-28">
     <div class="w3-container w3-red">
       <h2>Check Booking Status</h2>
     </div>
@@ -120,5 +112,7 @@
       </form>
     </div>
   </div>
-</header>
+</div>
+ 
+
 {% endblock content %}
