@@ -10,7 +10,7 @@
       <h2>Book a flight</h2>
     </div>
     <div class="w3-container w3-white w3-padding-16">
-      <form action="{% url 'flight:search_flight' %}" method='post'>
+      <form action="{% url 'flight:search_flight' %}" method='post' id='search_flight_form'>
         {% csrf_token %}
         <div class="w3-row-padding" style="margin: 0 -16px">
           <div class="w3-half w3-margin-bottom">
@@ -41,6 +41,7 @@
               name="dest-city"
               id="dest-city"
               class="border-solid border-2 rounded border-black"
+              disabled
             >
               <option value="Jeddah">Jeddah</option>
               <option value="Riyadh">Riyadh</option>

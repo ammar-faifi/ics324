@@ -4,6 +4,7 @@ from django.http import HttpResponseNotAllowed
 from django.shortcuts import render
 from django.views.generic.base import TemplateView, View
 from django.http.request import HttpRequest
+from . import models
 
 
 
@@ -25,3 +26,10 @@ class SearchFlight(View):
     def post(self, request:HttpRequest):
         print(request.POST)
         return render(request, 'flight/booking.html')
+
+
+def get_arrival_cities(request: HttpRequest):
+
+    flight = models.Flight.objects.all()
+
+    return flight
