@@ -2,6 +2,7 @@ from django.utils.translation import gettext as _
 from django.db import models
 from django.db.models import Model
 import datetime
+from data import cities
 
 
 CLASSES = [
@@ -118,8 +119,8 @@ class Flight(Model):
     code = models.CharField(max_length=10, primary_key=True)  # flight_code
     date = models.DateField(auto_now=False, auto_now_add=False)  # flight_date
     delay = models.DurationField(blank=True, default=datetime.timedelta())
-    destination = models.CharField(max_length=50)
-    source_city = models.CharField(max_length=50)
+    destination = models.CharField(max_length=50, choices=cities)
+    source_city = models.CharField(max_length=50, choices=cities)
     active = models.BooleanField()
 
     plane = models.ForeignKey(Plane, on_delete=models.CASCADE)
