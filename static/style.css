@@ -252,6 +252,28 @@ h6 {
     font-size: 16px
 }
 
+.wrapper {
+    width: 300px;
+    background-color: red;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .icon {
+    height: 50px;
+    width: 56px;
+  }
+  
+  .text {
+    margin: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
 .w3-serif {
     font-family: serif
 }

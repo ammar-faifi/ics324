@@ -14,7 +14,7 @@
           <h2 class="p-2 inline">{{ source_city }}</h2>
         </td>
         <td>
-          <img src="{% static 'take_off.png' %}" width="60px">
+          <img src="{% static 'landing.png' %}" width="55px">
           <h2 class="p-2 inline">{{ destination }}</h2>
         </td>
         <td>
@@ -51,14 +51,23 @@
               <td>
                 {% for class in f.plane.model.class_info.all %}
                   {% if class.type == 'F' %}
-                    <h2 class="p-2 inline"><strong>First Seat Available: </strong>{{ class.total_seats }} - <strong>Price:</strong> {{ class.price }} SR</h2>
-                    <br>
+                  <div style="width: 300px; height: 50px; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                    <input type="radio" name="flight" id="{{ f.code }}-{{ class.type }}">
+                    <img src="{% static 'first.png' %}" width='30px'>
+                    <span class='text'>{{ class.total_seats }} Seats Avilabe - <strong>Price:</strong> {{ class.price }} SR</span>
+                  </div>
                   {% elif class.type == 'E' %}
-                    <h2 class="p-2 inline"><strong>Economy Seat Available: </strong>{{ class.total_seats }} - <strong>Price:</strong> {{ class.price }} SR</h2>
-                    <br>
-                  {% elif class.type == 'B' %}
-                    <h2 class="p-2 inline"><strong>Business Seat Available: </strong>{{ class.total_seats }} - <strong>Price:</strong> {{ class.price }} SR</h2>
-                    <br>
+                  <div style="width: 300px; height: 50px; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                    <input type="radio" name="flight" id="{{ f.code }}-{{ class.type }}">
+                    <img src="{% static 'economy.png' %}" width='30px'>
+                    <span class='text'>{{ class.total_seats }} Seats Avilabe - <strong>Price:</strong> {{ class.price }} SR</span>
+                  </div>
+                    {% elif class.type == 'B' %}
+                    <div style="width: 300px; height: 50px; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                      <input type="radio" name="flight" id="{{ f.code }}-{{ class.type }}">
+                      <img src="{% static 'business.png' %}" width='30px'>
+                      <p>{{ class.total_seats }} Seats Avilabe - <strong>Price:</strong> {{ class.price }} SR</p>
+                    </div>
                   {% endif %}
                 {% endfor %}
               </td>
