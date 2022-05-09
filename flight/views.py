@@ -64,4 +64,6 @@ def get_cities(request: HttpRequest):
         return JsonResponse(cities_list, safe=False)
     
     else:
-        return JsonResponse(cities, safe=False)
+        for city in cities:
+            cities_list.append({'code': city[0], 'city': city[1]})
+        return JsonResponse(cities_list, safe=False)
