@@ -1,4 +1,5 @@
 from array import array
+from operator import mod
 from typing import Any, Dict
 from django import views
 
@@ -34,7 +35,14 @@ class SearchFlight(View):
 class ManageBooking(View):
 
     def post(self, request:HttpRequest):
-        print(request.POST)
+        try:
+            booking_code = request.POST.get('booking_code')
+            last_name = request.POST.get('last_name')
+
+            ticket = models.Flight.objects.get(pk=booking_code, passenger__last_name=last_name)
+        except:
+            return Http404(request)
+        print(ticket)
         return redirect('flight:index')
 
 

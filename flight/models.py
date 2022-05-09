@@ -1,8 +1,12 @@
 from django.utils.translation import gettext as _
 from django.db import models
 from django.db.models import Model
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
+
 import datetime
 from data import cities
+import random, string
 
 
 CLASSES = [
@@ -214,6 +218,7 @@ class Ticket(Model):
             ["seat_number", "flight"],  # exactly one ticket for each seat in a flight
         ]
 
+    code = models.CharField(max_length=6, primary_key=True, blank=True)
     checked_in = models.BooleanField(default=False)
     seat_number = models.CharField(max_length=3)
     gate = models.CharField(max_length=50)
@@ -230,4 +235,19 @@ class Ticket(Model):
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Ticket ID: {self.id} - Checked In: {self.checked_in} - Class Type: {self.class_type}"
+        return f"Ticket ID: {self.code} - Checked In: {self.checked_in} - Class Type: {self.class_type}"
+
+
+def get_random_unique_code():
+    exists = True
+    while exists:
+        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+        exists = Ticket.objects.filter(code=code).exists()
+        if not exists:
+            return code
+
+@receiver(post_save, sender=Ticket)
+def create_profile(sender, instance, created, **kwargs):
+
+    if created:
+        instance.code = get_random_unique_code()
