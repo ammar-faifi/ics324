@@ -9,21 +9,35 @@
     </div>
     <div class="w3-container w3-white w3-padding-16">
       <!-- Loop through every flight-->
-      <div class="border">
-        <h2 class="p-2 inline"><strong>Source City: </strong> Dammam</h2>
-        <h2 class="p-2 inline"><strong>Destination City:</strong> Jeddah</h2>
-        <h2 class="p-2 inline"><strong>Flight Number:</strong> F2091</h2>
-        <h2 class="p-2 inline"><strong>Departure Time:</strong> 20:00</h2>
-        <h2 class="p-2 inline"><strong>Date :</strong> 2022/02/02</h2>
-        <br />
-        <br />
-        <h2 class="p-2 inline"><strong>Economy Seat Available:</strong> Yes</h2>
-        <h2 class="p-2 inline"><strong>Business Seat Available:</strong> No</h2>
-        <h2 class="p-2 inline"><strong>First Seat Available:</strong> No</h2>
-        <button class="w3-button w3-dark-grey block m-3">
-          Book This Flight
-        </button>
-      </div>
+      {% for f in flights %}
+        <div class="border">
+          <h2 class="p-2 inline"><strong>Source City: </strong>{{ f.source_city }}</h2>
+          <h2 class="p-2 inline"><strong>Destination City:</strong>{{ f.destination }}</h2>
+          <h2 class="p-2 inline"><strong>Flight Number:</strong>{{ f.code }}</h2>
+          <h2 class="p-2 inline"><strong>Departure Time:</strong>{{ f.time }}</h2>
+          <h2 class="p-2 inline"><strong>Date :</strong>{{ f.date }}</h2>
+          <br />
+          <br />
+
+          <h2><strong>Avilabe Classes:</strong></h2>
+          {% for class in f.plane.model.class_info.all %}
+            {% if class.type == 'F' %}
+              <h2 class="p-2 inline"><strong>First Seat Available: {{ class.total_seats }} - </strong> Price: {{ class.price }} SR</h2>
+            {% elif class.type == 'E' %}
+              <h2 class="p-2 inline"><strong>Economy Seat Available: {{ class.total_seats }} - </strong> Price: {{ class.price }} SR</h2>
+            {% elif class.type == 'B' %}
+              <h2 class="p-2 inline"><strong>Business Seat Available: {{ class.total_seats }} - </strong> Price: {{ class.price }} SR</h2>
+            {% endif %}
+            <br>
+          {% endfor %}
+
+          <button class="w3-button w3-dark-grey block m-3">
+            Book This Flight
+          </button>
+        </div>
+      {% empty %}
+        <strong>No flights found for this date</strong>
+      {% endfor %}
     </div>
   </div>
 </div>
