@@ -1,8 +1,9 @@
 from array import array
 from typing import Any, Dict
+from django import views
 
 from django.http import Http404, HttpResponse, HttpResponseNotAllowed, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render, resolve_url
 from django.views.generic.base import TemplateView, View
 from django.http.request import HttpRequest
 from . import models
@@ -29,6 +30,12 @@ class SearchFlight(View):
     def post(self, request:HttpRequest):
         print(request.POST)
         return render(request, 'flight/booking.html')
+
+class ManageBooking(View):
+
+    def post(self, request:HttpRequest):
+        print(request.POST)
+        return redirect('flight:index')
 
 
 def get_cities(request: HttpRequest):
