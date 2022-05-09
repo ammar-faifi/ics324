@@ -8,24 +8,89 @@
       <h2>Passenger Info</h2>
     </div>
     <div class="w3-container w3-white w3-padding-16">
-      <!-- Loop through every flight-->
-      <div class="border">
-        <h2 class="p-2 inline"><strong>Source City: </strong> Dammam</h2>
-        <h2 class="p-2 inline"><strong>Destination City:</strong> Jeddah</h2>
-        <h2 class="p-2 inline"><strong>Flight Number:</strong> F2091</h2>
-        <h2 class="p-2 inline"><strong>Departure Time:</strong> 20:00</h2>
-        <h2 class="p-2 inline"><strong>Date :</strong> 2022/02/02</h2>
-        <br />
-        <br />
-        <h2 class="p-2 inline"><strong>Economy Seat Available:</strong> Yes</h2>
-        <h2 class="p-2 inline"><strong>Business Seat Available:</strong> No</h2>
-        <h2 class="p-2 inline"><strong>First Seat Available:</strong> No</h2>
-        <button class="w3-button w3-dark-grey block m-3">
-          Book This Flight
+      <form
+        id="form"
+        action="{% url 'flight:search_flight' %}"
+        method="post"
+        id=""
+      >
+        <!-- repeated for every passenger-->
+        <div class="passen border-2 m-2 border-black">
+          <label class="p-2">First Name</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="text"
+            name="first-name"
+            required
+          />
+          <label class="p-2">Last Name</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="text"
+            name="last-name"
+            required
+          />
+          <label class="p-2">SSN</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="number"
+            name="ssn"
+            required
+          />
+          <label class="p-2">Birth Date</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="date"
+            name="brith-date"
+            required
+          />
+          <br />
+          <label class="p-2">Phone</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="Phone"
+            name="phone"
+            required
+          />
+          <label class="p-2">Address</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="text"
+            name="address"
+            required
+          />
+          <label class="p-2">Special Needs?</label>
+          <input
+            class="inline m-2 max-w-fit"
+            type="checkbox"
+            name="special-needs"
+            required
+          />
+        </div>
+        <button
+          id="another-button"
+          class="w3-button w3-dark-grey m-3"
+          onclick="appendPassenger()"
+        >
+          Add Another Passenger
         </button>
-      </div>
+        <button class="w3-button w3-dark-grey m-3">Confirm Booking</button>
+      </form>
     </div>
   </div>
 </div>
+
+<script>
+  function appendPassenger() {
+    const container = document.getElementById("form");
+    const another_button = document.getElementById("another-button");
+
+    const requiredDiv = document.getElementsByClassName("passen")[0];
+    const clonedDiv = requiredDiv.cloneNode(true);
+
+    container.insertBefore(clonedDiv, another_button);
+    console.log(container);
+  }
+</script>
 
 {%endblock content %}

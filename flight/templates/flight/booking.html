@@ -9,43 +9,20 @@
     </div>
     <div class="w3-container w3-white w3-padding-16">
       <!-- Loop through every flight-->
-      <div class="border">
+      <div class="border-2 m-4">
         <h2 class="p-2 inline"><strong>Source City: </strong> Dammam</h2>
         <h2 class="p-2 inline"><strong>Destination City:</strong> Jeddah</h2>
         <h2 class="p-2 inline"><strong>Flight Number:</strong> F2091</h2>
         <h2 class="p-2 inline"><strong>Departure Time:</strong> 20:00</h2>
         <h2 class="p-2 inline"><strong>Date :</strong> 2022/02/02</h2>
-        <br />
-        <br />
-        <h2 class="p-2 inline"><strong>Economy Seat Available:</strong> Yes</h2>
-        <h2 class="p-2 inline"><strong>Business Seat Available:</strong> No</h2>
-        <h2 class="p-2 inline"><strong>First Seat Available:</strong> No</h2>
+        <h2 class="p-2 inline"><strong>Class Type:</strong> Economy</h2>
+
         <button class="w3-button w3-dark-grey block m-3">
-          Book This Flight
+          <a>Book This Flight</a>
         </button>
       </div>
     </div>
   </div>
 </div>
 
-{%endblock content %}
-<div class="bg-[url('{% static 'airplane.jpg' %}')] bg-scroll bg-cover">
-  <div class="p-28">
-    <div class="w3-container w3-red">
-      <h2>Check Booking Status</h2>
-    </div>
-    <div class="w3-container w3-white w3-padding-16">
-      <table>
-        <tr>
-          <td>Code</td>
-          <td>Last Name</td>
-        </tr>
-        <tr>
-          <td>{{ ticket.code }}</td>
-          <td>{{ ticket.passenger.last_name }}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  {% endblock content %}
-</div>
+{% endblock content %}
