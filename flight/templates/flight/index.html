@@ -90,6 +90,11 @@
       <h2>Check Booking Status</h2>
     </div>
     <div class="w3-container w3-white w3-padding-16">
+      {% if message %}
+        <div class='info'>
+          <strong style='color: red;'>{{ message }}</strong>
+        </div>
+      {% endif %}
       <form action="{% url 'flight:manage_booking' %}" method='post'>
         {% csrf_token %}
         <div class="w3-row-padding" style="margin: 0 -16px">
