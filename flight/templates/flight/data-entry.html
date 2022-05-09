@@ -14,32 +14,45 @@
     </div>
     <div class="w3-container w3-white w3-padding-16">
       <!-- Loop through every flight-->
-      {% for f in flights %}
-        <div class="border">
-          <h2 class="p-2 inline"><strong>Flight Number:</strong>{{ f.code }}</h2>
-          <h2 class="p-2 inline"><strong>Departure Time:</strong>{{ f.time }}</h2>
-          <br />
-          <br />
+      <table style="width:100%">
+        <tr>
+          <td><strong>Flight Number</strong></td>
+          <td><strong>Departure Time</strong></td>
+          <td><strong>Avilabe Classes</strong></td>
+        </tr>
+        {% for f in flights %}
+          <tr>
+            <div class="border">
+              <td>
+                <h2 class="p-2 inline">{{ f.code }}</h2>
+              </td>
+              <td>
+                <h2 class="p-2 inline">{{ f.time }}</h2>
+              </td>
 
-          <h2><strong>Avilabe Classes:</strong></h2>
-          {% for class in f.plane.model.class_info.all %}
-            {% if class.type == 'F' %}
-              <h2 class="p-2 inline"><strong>First Seat Available: </strong>{{ class.total_seats }} - <strong>Price:</strong> {{ class.price }} SR</h2>
-            {% elif class.type == 'E' %}
-              <h2 class="p-2 inline"><strong>Economy Seat Available: </strong>{{ class.total_seats }} - <strong>Price:</strong> {{ class.price }} SR</h2>
-            {% elif class.type == 'B' %}
-              <h2 class="p-2 inline"><strong>Business Seat Available: </strong>{{ class.total_seats }} - <strong>Price:</strong> {{ class.price }} SR</h2>
-            {% endif %}
-            <br>
-          {% endfor %}
-
-          <button class="w3-button w3-dark-grey block m-3">
-            Book This Flight
-          </button>
-        </div>
-      {% empty %}
-        <strong>No flights found for this date</strong>
-      {% endfor %}
+              <td>
+                {% for class in f.plane.model.class_info.all %}
+                  {% if class.type == 'F' %}
+                    <h2 class="p-2 inline"><strong>First Seat Available: </strong>{{ class.total_seats }} - <strong>Price:</strong> {{ class.price }} SR</h2>
+                    <br>
+                  {% elif class.type == 'E' %}
+                    <h2 class="p-2 inline"><strong>Economy Seat Available: </strong>{{ class.total_seats }} - <strong>Price:</strong> {{ class.price }} SR</h2>
+                    <br>
+                  {% elif class.type == 'B' %}
+                    <h2 class="p-2 inline"><strong>Business Seat Available: </strong>{{ class.total_seats }} - <strong>Price:</strong> {{ class.price }} SR</h2>
+                    <br>
+                  {% endif %}
+                {% endfor %}
+              </td>
+            </div>
+          </tr>
+            {% empty %}
+            <strong>No flights found for this date</strong>
+            {% endfor %}
+      </table>
+        <button class="w3-button w3-dark-grey block m-3">
+          Book Selected Flight
+        </button>
     </div>
   </div>
 </div>
