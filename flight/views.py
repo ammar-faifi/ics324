@@ -32,8 +32,18 @@ class SearchFlight(View):
 
 
     def post(self, request:HttpRequest):
-        print(request.POST)
-        return render(request, 'flight/booking.html')
+        data = request.POST
+        flights = models.Flight.objects.filter(
+            date=data.get('date'),
+            source_city=data.get('source_city'),
+            destination=data.get('dest_city'),
+        )
+
+        return render(
+            request, 
+            'flight/data-entry.html',
+            context={'flights': flights}
+            )
 
 class ManageBooking(View):
 
