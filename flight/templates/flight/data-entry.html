@@ -8,14 +8,16 @@
       <h2>Passenger Info</h2>
     </div>
     <div class="w3-container w3-white w3-padding-16">
+      <h2 class="p-2 inline"><strong>Source City: </strong>{{ source_city }}</h2>
+      <h2 class="p-2 inline"><strong>Destination City:</strong>{{ destination }}</h2>
+      <h2 class="p-2 inline"><strong>Date :</strong>{{ date }}</h2>
+    </div>
+    <div class="w3-container w3-white w3-padding-16">
       <!-- Loop through every flight-->
       {% for f in flights %}
         <div class="border">
-          <h2 class="p-2 inline"><strong>Source City: </strong>{{ f.source_city }}</h2>
-          <h2 class="p-2 inline"><strong>Destination City:</strong>{{ f.destination }}</h2>
           <h2 class="p-2 inline"><strong>Flight Number:</strong>{{ f.code }}</h2>
           <h2 class="p-2 inline"><strong>Departure Time:</strong>{{ f.time }}</h2>
-          <h2 class="p-2 inline"><strong>Date :</strong>{{ f.date }}</h2>
           <br />
           <br />
 
