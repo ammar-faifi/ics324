@@ -1,6 +1,6 @@
 from django.utils.translation import gettext as _
 from django.db import models
-from django.db.models import Model
+from django.db.models import Model, UniqueConstraint
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
@@ -214,11 +214,12 @@ class Ticket(Model):
     class Meta:
         verbose_name = _("ticket")
         verbose_name_plural = _("tickets")
-        unique_together = [
-            ["seat_number", "flight"],  # exactly one ticket for each seat in a flight
+        constraints = [
+            models.UniqueConstraint("seat_number", "flight", name='ticket_constraint')
         ]
 
-    code = models.CharField(max_length=6, primary_key=True, blank=True)
+
+    code = models.CharField(max_length=6, unique=True, blank=True)
     checked_in = models.BooleanField(default=False)
     seat_number = models.CharField(max_length=3)
     gate = models.CharField(max_length=50)
@@ -251,3 +252,4 @@ def create_profile(sender, instance, created, **kwargs):
 
     if created:
         instance.code = get_random_unique_code()
+        instance.save()
