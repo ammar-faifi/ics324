@@ -1,12 +1,15 @@
 from array import array
+import imp
 from operator import mod
 from typing import Any, Dict
-from django import views
 
 from django.http import Http404, HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import redirect, render, resolve_url
+from django.urls import reverse
 from django.views.generic.base import TemplateView, View
 from django.http.request import HttpRequest
+from django.core.exceptions import ObjectDoesNotExist
+
 from . import models
 from data import cities
 
@@ -38,12 +41,23 @@ class ManageBooking(View):
         try:
             booking_code = request.POST.get('booking_code')
             last_name = request.POST.get('last_name')
+            ticket = models.Ticket.objects.get(code=booking_code, passenger__last_name=last_name)
+        
+        except ObjectDoesNotExist:
+            return render(
+                request,
+                'flight/index.html',
+                context={'message': 'We did not find your booking.'}
+                )
+        
+        except Exception as e:
+            return HttpResponse(e)
 
-            ticket = models.Flight.objects.get(pk=booking_code, passenger__last_name=last_name)
-        except:
-            return Http404(request)
-        print(ticket)
-        return redirect('flight:index')
+        return render(
+            request,
+            'flight/booking.html',
+            context={'ticket': ticket}
+        )
 
 
 def get_cities(request: HttpRequest):
