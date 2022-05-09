@@ -5,16 +5,34 @@
   -->
   <div class="p-28">
     <div class="w3-container w3-red">
-      <h2>Passenger Info</h2>
+      <h1>Chose your flight</h1>
     </div>
+    <table width='50%' style='margin-left: auto; margin-right: auto;'>
+      <tr>
+        <td>
+          <img src="{% static 'take_off.png' %}" width="60px">
+          <h2 class="p-2 inline">{{ source_city }}</h2>
+        </td>
+        <td>
+          <img src="{% static 'take_off.png' %}" width="60px">
+          <h2 class="p-2 inline">{{ destination }}</h2>
+        </td>
+        <td>
+          <img src="{% static 'calender.png' %}" width="60px">
+          <h2 class="p-1 inline">{{ date }}</h2>
+        </td>
+      </tr>
+    </table>
     <div class="w3-container w3-white w3-padding-16">
-      <h2 class="p-2 inline"><strong>Source City: </strong>{{ source_city }}</h2>
-      <h2 class="p-2 inline"><strong>Destination City:</strong>{{ destination }}</h2>
-      <h2 class="p-2 inline"><strong>Date :</strong>{{ date }}</h2>
     </div>
     <div class="w3-container w3-white w3-padding-16">
       <!-- Loop through every flight-->
-      <table style="width:100%">
+      <table style="width:100%;">
+        <style>
+          th, td {
+            padding: 20px;
+          }
+        </style>
         <tr>
           <td><strong>Flight Number</strong></td>
           <td><strong>Departure Time</strong></td>
