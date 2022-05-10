@@ -122,6 +122,7 @@ class Flight(Model):
 
     code = models.CharField(max_length=10, primary_key=True)  # flight_code
     date = models.DateField(auto_now=False, auto_now_add=False)  # flight_date
+    time = models.TimeField(auto_now=False, auto_now_add=False)
     delay = models.DurationField(blank=True, default=datetime.timedelta())
     destination = models.CharField(max_length=50, choices=cities)
     source_city = models.CharField(max_length=50, choices=cities)
