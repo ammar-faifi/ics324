@@ -33,6 +33,7 @@ class Passenger(Model):
     phone = models.CharField(max_length=13)
     address = models.CharField(max_length=50)
     special_need = models.BooleanField()
+    email = models.EmailField(max_length=254)
 
     def __str__(self):
         return f"pssn: {self.pssn} - {self.first_name}"
