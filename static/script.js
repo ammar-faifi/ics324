@@ -1,4 +1,6 @@
+
 $(() => {
+  console.log("enter main script");
   // function will get executed
   // on click of submit button
   $("#source_city").on("change", function (ev) {
@@ -21,5 +23,15 @@ $(() => {
         alert("Error while searching for a flight");
       },
     });
+  });
+
+  // ----------
+
+  $("#book_button").on("click", function (ev) {
+    console.log("try to hide");
+    ev.preventDefault();
+    $("#choose_flight_form").hide();
+
+    
   });
 });
