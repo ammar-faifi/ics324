@@ -28,10 +28,14 @@ $(() => {
   // ----------
 
   $("#book_button").on("click", function (ev) {
-    console.log("try to hide");
     ev.preventDefault();
     $("#choose_flight_form").hide();
+    $("#info_modal").show();
+  });
 
-    
+  $("#go_back").on("click", (ev) => {
+    ev.preventDefault();
+    $("#info_modal").hide();
+    $("#choose_flight_form").show();
   });
 });
