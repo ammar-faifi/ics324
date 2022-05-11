@@ -95,3 +95,36 @@ def get_cities(request: HttpRequest):
         for city in cities:
             cities_list.append({'code': city[0], 'city': city[1]})
         return JsonResponse(cities_list, safe=False)
+
+
+def book(request: HttpRequest):
+    d = request.POST
+    data = {
+        'first_name': d.get('first-name'),
+        'last_name': d.get('last-name'),
+        'birth_date': d.get('birth-date'),
+        'phone': d.get('phone'),
+        'address': d.get('address'),
+        'email': d.get('email'),
+        'special_need': d.get('special-needs', False),
+    }
+
+    print(request.POST)
+    try:
+        # create the Passenger object
+        passenger = models.Passenger.objects.get_or_create(
+            **data
+        )
+        print(passenger)
+
+        # link to this passenger its ticket
+        
+
+    except Exception as e: 
+        print(e)
+
+    return render(
+        request,
+        'flight/booking_done.html',
+        context=None,
+    )
