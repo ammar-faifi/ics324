@@ -1,153 +1,152 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} 
+{% load static %} 
 
-<!-- Choose the flight modal -->
-<div class="" id="choose_flight_form">
-  <div class="p-28">
-    <div class="w3-container w3-red">
-      <h1>Chose your flight</h1>
-    </div>
-    <table width="50%" style="margin-left: auto; margin-right: auto">
-      <tr>
-        <td>
-          <img src="{% static 'take_off.png' %}" width="60px" />
-          <h2 class="p-2 inline">{{ source_city }}</h2>
-        </td>
-        <td>
-          <img src="{% static 'landing.png' %}" width="55px" />
-          <h2 class="p-2 inline">{{ destination }}</h2>
-        </td>
-        <td>
-          <img src="{% static 'calender.png' %}" width="60px" />
-          <h2 class="p-1 inline">{{ date }}</h2>
-        </td>
-      </tr>
-    </table>
-    <div class="w3-container w3-white w3-padding-16"></div>
-    <div class="w3-container w3-white w3-padding-16">
-      <!-- Loop through every flight-->
-      <table style="width: 100%">
-        <style>
-          th,
-          td {
-            padding: 20px;
-          }
-        </style>
+{% block content %}
+<form id="confirm_booking" action="{% url 'flight:search_flight' %}" method="post">
+  {% csrf_token %}
+  <!-- Choose the flight modal -->
+  <div class="" id="choose_flight_form">
+    <div class="p-28">
+      <div class="w3-container w3-red">
+        <h1>Chose your flight</h1>
+      </div>
+      <table width="50%" style="margin-left: auto; margin-right: auto">
         <tr>
-          <td><strong>Flight Number</strong></td>
-          <td><strong>Departure Time</strong></td>
-          <td><strong>Avilabe Classes</strong></td>
+          <td>
+            <img src="{% static 'take_off.png' %}" width="60px" />
+            <h2 class="p-2 inline">{{ source_city }}</h2>
+          </td>
+          <td>
+            <img src="{% static 'landing.png' %}" width="55px" />
+            <h2 class="p-2 inline">{{ destination }}</h2>
+          </td>
+          <td>
+            <img src="{% static 'calender.png' %}" width="60px" />
+            <h2 class="p-1 inline">{{ date }}</h2>
+          </td>
         </tr>
-        {% for f in flights %}
-        <tr>
-          <div class="border">
-            <td>
-              <h2 class="p-2 inline">{{ f.code }}</h2>
-            </td>
-            <td>
-              <h2 class="p-2 inline">{{ f.time }}</h2>
-            </td>
-
-            <td>
-              {% for class in f.plane.model.class_info.all %} 
-              {% if class.type == 'F' %}
-              <div
-                style="
-                  width: 300px;
-                  height: 50px;
-                  display: flex;
-                  flex-direction: row;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <input
-                  type="radio"
-                  name="flight"
-                  id="{{ f.code }}-{{ class.type }}"
-                />
-                <img src="{% static 'first.png' %}" width="30px" />
-                <span>{{ class.total_seats }} Seats Avilabe -
-                  <strong>Price:</strong> {{ class.price }} SR</span
-                >
-              </div>
-              {% elif class.type == 'E' %}
-              <div
-                style="
-                  width: 300px;
-                  height: 50px;
-                  display: flex;
-                  flex-direction: row;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <input
-                  type="radio"
-                  name="flight"
-                  id="{{ f.code }}-{{ class.type }}"
-                />
-                <img src="{% static 'economy.png' %}" width="30px" />
-                <span>{{ class.total_seats }} Seats Avilabe -
-                  <strong>Price:</strong> {{ class.price }} SR</span
-                >
-              </div>
-              {% elif class.type == 'B' %}
-              <div
-                style="
-                  width: 300px;
-                  height: 50px;
-                  display: flex;
-                  flex-direction: row;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <input
-                  type="radio"
-                  name="flight"
-                  id="{{ f.code }}-{{ class.type }}"
-                />
-                <img src="{% static 'business.png' %}" width="30px" />
-                <p>
-                  {{ class.total_seats }} Seats Avilabe -
-                  <strong>Price:</strong> {{ class.price }} SR
-                </p>
-              </div>
-              {% endif %} {% endfor %}
-            </td>
-          </div>
-        </tr>
-        {% empty %}
-        <strong>No flights found for this date</strong>
-        {% endfor %}
       </table>
+      <div class="w3-container w3-white w3-padding-16"></div>
+      <div class="w3-container w3-white w3-padding-16">
+        <!-- Loop through every flight-->
+        <table style="width: 100%">
+          <style>
+            th,
+            td {
+              padding: 20px;
+            }
+          </style>
+          <tr>
+            <td><strong>Flight Number</strong></td>
+            <td><strong>Departure Time</strong></td>
+            <td><strong>Avilabe Classes</strong></td>
+          </tr>
+          {% for f in flights %}
+          <tr>
+            <div class="border">
+              <td>
+                <h2 class="p-2 inline">{{ f.code }}</h2>
+              </td>
+              <td>
+                <h2 class="p-2 inline">{{ f.time }}</h2>
+              </td>
 
-      <button class="w3-button w3-dark-grey block m-3" id="book_button">
-        Book Selected Flight
-      </button>
+              <td>
+                {% for class in f.plane.model.class_info.all %} 
+                {% if class.type == 'F' %}
+                <div
+                  style="
+                    width: 300px;
+                    height: 50px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="flight"
+                    id="{{ f.code }}-{{ class.type }}"
+                  />
+                  <img src="{% static 'first.png' %}" width="30px" />
+                  <span
+                    >{{ class.total_seats }} Seats Avilabe -
+                    <strong>Price:</strong> {{ class.price }} SR</span
+                  >
+                </div>
+                {% elif class.type == 'E' %}
+                <div
+                  style="
+                    width: 300px;
+                    height: 50px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="flight"
+                    id="{{ f.code }}-{{ class.type }}"
+                  />
+                  <img src="{% static 'economy.png' %}" width="30px" />
+                  <span
+                    >{{ class.total_seats }} Seats Avilabe -
+                    <strong>Price:</strong> {{ class.price }} SR</span
+                  >
+                </div>
+                {% elif class.type == 'B' %}
+                <div
+                  style="
+                    width: 300px;
+                    height: 50px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="flight"
+                    id="{{ f.code }}-{{ class.type }}"
+                  />
+                  <img src="{% static 'business.png' %}" width="30px" />
+                  <p>
+                    {{ class.total_seats }} Seats Avilabe -
+                    <strong>Price:</strong> {{ class.price }} SR
+                  </p>
+                </div>
+                {% endif %} {% endfor %}
+              </td>
+            </div>
+          </tr>
+          {% empty %}
+          <strong>No flights found for this date</strong>
+          {% endfor %}
+        </table>
+
+        <button class="w3-button w3-dark-grey block m-3" id="book_button">
+          Book Selected Flight
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
+  <!-- Personal Info Modal -->
+  <div class="" id="info_modal" style="display: none">
+    <!--
+      Enter Passenger Information
+    -->
+    <div class="p-28">
+      <div class="w3-container w3-red">
+        <h2>Passenger Info</h2>
+      </div>
+      <button class="w3-button w3-blue m-3" id="go_back">Co Back</button>
 
-<!-- Personal Info Modal -->
-<div class="" id="info_modal" style="display:none">
-  <!--
-    Enter Passenger Information
-  -->
-  <div class="p-28">
-    <div class="w3-container w3-red">
-      <h2>Passenger Info</h2>
-    </div>
-    <button class="w3-button w3-blue m-3" id="go_back">Co Back</button>
-
-    <div class="w3-container w3-white w3-padding-16">
-      <form
-        id="form"
-        action="{% url 'flight:search_flight' %}"
-        method="post"
-        id=""
-      >
+      <div class="w3-container w3-white w3-padding-16">
         <!-- repeated for every passenger-->
         <div class="passen border-2 m-2 border-black">
           <label class="p-2">First Name</label>
@@ -193,12 +192,20 @@
             name="address"
             required
           />
+          <br />
+          <label class="p-2">Email</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="email"
+            name="email"
+            required
+          />
+          <br />
           <label class="p-2">Special Needs?</label>
           <input
             class="inline m-2 max-w-fit"
             type="checkbox"
             name="special-needs"
-            required
           />
         </div>
         <button
@@ -208,11 +215,13 @@
         >
           Add Another Passenger
         </button>
-        <button class="w3-button w3-dark-grey m-3" id="confirm_book">Confirm Booking</button>
-      </form>
+        <button class="w3-button w3-dark-grey m-3" type="submit">
+          Confirm Booking
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</form>
 
 <script>
   function appendPassenger() {
