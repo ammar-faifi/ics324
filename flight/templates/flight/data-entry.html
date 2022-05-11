@@ -2,30 +2,30 @@
 {% load static %} 
 
 {% block content %}
-<form id="confirm_booking" action="{% url 'flight:search_flight' %}" method="post">
+<form id="confirm_booking" action="{% url 'flight:book' %}" method="post">
   {% csrf_token %}
   <!-- Choose the flight modal -->
+  <table width="50%" style="margin-left: auto; margin-right: auto">
+    <tr>
+      <td>
+        <img src="{% static 'take_off.png' %}" width="60px" />
+        <h2 class="p-2 inline">{{ source_city }}</h2>
+      </td>
+      <td>
+        <img src="{% static 'landing.png' %}" width="55px" />
+        <h2 class="p-2 inline">{{ destination }}</h2>
+      </td>
+      <td>
+        <img src="{% static 'calender.png' %}" width="60px" />
+        <h2 class="p-1 inline">{{ date }}</h2>
+      </td>
+    </tr>
+  </table>
   <div class="" id="choose_flight_form">
     <div class="p-28">
       <div class="w3-container w3-red">
         <h1>Chose your flight</h1>
       </div>
-      <table width="50%" style="margin-left: auto; margin-right: auto">
-        <tr>
-          <td>
-            <img src="{% static 'take_off.png' %}" width="60px" />
-            <h2 class="p-2 inline">{{ source_city }}</h2>
-          </td>
-          <td>
-            <img src="{% static 'landing.png' %}" width="55px" />
-            <h2 class="p-2 inline">{{ destination }}</h2>
-          </td>
-          <td>
-            <img src="{% static 'calender.png' %}" width="60px" />
-            <h2 class="p-1 inline">{{ date }}</h2>
-          </td>
-        </tr>
-      </table>
       <div class="w3-container w3-white w3-padding-16"></div>
       <div class="w3-container w3-white w3-padding-16">
         <!-- Loop through every flight-->
@@ -68,6 +68,8 @@
                     type="radio"
                     name="flight"
                     id="{{ f.code }}-{{ class.type }}"
+                    required
+                    onclick=' $("#book_button").removeAttr("disabled");'
                   />
                   <img src="{% static 'first.png' %}" width="30px" />
                   <span
@@ -90,6 +92,8 @@
                     type="radio"
                     name="flight"
                     id="{{ f.code }}-{{ class.type }}"
+                    required
+                    onclick=' $("#book_button").removeAttr("disabled");'
                   />
                   <img src="{% static 'economy.png' %}" width="30px" />
                   <span
@@ -112,6 +116,8 @@
                     type="radio"
                     name="flight"
                     id="{{ f.code }}-{{ class.type }}"
+                    required
+                    onclick=' $("#book_button").removeAttr("disabled");'
                   />
                   <img src="{% static 'business.png' %}" width="30px" />
                   <p>
@@ -128,7 +134,7 @@
           {% endfor %}
         </table>
 
-        <button class="w3-button w3-dark-grey block m-3" id="book_button">
+        <button disabled type="button" class="w3-button w3-dark-grey block m-3" id="book_button">
           Book Selected Flight
         </button>
       </div>
@@ -144,9 +150,9 @@
       <div class="w3-container w3-red">
         <h2>Passenger Info</h2>
       </div>
-      <button class="w3-button w3-blue m-3" id="go_back">Co Back</button>
+      <button type="button" class="w3-button w3-blue m-3" id="go_back">Co Back</button>
 
-      <div class="w3-container w3-white w3-padding-16">
+      <div class="w3-container w3-white w3-padding-16" id="fsdfd">
         <!-- repeated for every passenger-->
         <div class="passen border-2 m-2 border-black">
           <label class="p-2">First Name</label>
@@ -208,7 +214,7 @@
             name="special-needs"
           />
         </div>
-        <button
+        <button type="button"
           id="another-button"
           class="w3-button w3-dark-grey m-3"
           onclick="appendPassenger()"
@@ -225,7 +231,7 @@
 
 <script>
   function appendPassenger() {
-    const container = document.getElementById("form");
+    const container = document.getElementById("fsdfd");
     const another_button = document.getElementById("another-button");
 
     const requiredDiv = document.getElementsByClassName("passen")[0];
