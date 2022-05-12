@@ -13,6 +13,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from . import models
 from data import cities
 
+import flight
+
 
 
 class IndexView(TemplateView):
@@ -40,12 +42,27 @@ class SearchFlight(View):
         }
 
         flights = models.Flight.objects.filter(**data)
+        print(flights)
+
+        result = []
+        for f in flights:
+            result.append([f, {}])
+            for c, _ in models.CLASSES:
+                try:
+                    total_seats = f.plane.model.class_info.filter(type=c)[0].total_seats
+                except:
+                    total_seats = 0
+                    
+                result[-1][1][c] = total_seats - models.Ticket.objects.filter(class_type=c, flight=f).count()
+        print(result)
+
 
         return render(
             request, 
             'flight/data-entry.html',
             context={
                 'flights': flights, 
+                'result': result,
                 } | data
             )
 
@@ -124,6 +141,7 @@ def book(request: HttpRequest):
             code=models.get_random_unique_code(),
             seat_number = models.get_random_seat_code(flight),
             cost=flight.plane.model.class_info.get(type=class_type).price,
+            class_type = class_type,
             gate='G10',
             passenger=passenger[0],
             flight=flight,

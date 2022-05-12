@@ -41,19 +41,19 @@
             <td><strong>Departure Time</strong></td>
             <td><strong>Avilabe Classes</strong></td>
           </tr>
-          {% for f in flights %}
+          {% for flight, seat_count in result %}
           <tr>
             <div class="border">
               <td>
-                <h2 class="p-2 inline">{{ f.code }}</h2>
+                <h2 class="p-2 inline">{{ flight.code }}</h2>
               </td>
               <td>
-                <h2 class="p-2 inline">{{ f.time }}</h2>
+                <h2 class="p-2 inline">{{ flight.time }}</h2>
               </td>
 
               <td>
-                {% for class in f.plane.model.class_info.all %} 
-                {% if class.type == 'F' %}
+                <!-- for first class-->
+                {% if seat_count.F > 0 %}
                 <div
                   style="
                     width: 300px;
@@ -67,18 +67,19 @@
                   <input
                     type="radio"
                     name="flight_selector"
-                    id="{{ f.code }}-{{ class.type }}"
-                    value="{{ f.code }}-{{ class.type }}"
+                    id="{{ flight.code }}-F"
+                    value="{{ flight.code }}-F"
                     required
                     onclick=' $("#book_button").removeAttr("disabled");'
                   />
                   <img src="{% static 'first.png' %}" width="30px" />
                   <span
-                    >{{ class.total_seats }} Seats Avilabe -
+                    >{{ seat_count.F }} Seats Avilabe -
                     <strong>Price:</strong> {{ class.price }} SR</span
                   >
                 </div>
-                {% elif class.type == 'E' %}
+                <!-- for economy class-->
+                {% elif seat_count.E > 0 %}
                 <div
                   style="
                     width: 300px;
@@ -92,18 +93,19 @@
                   <input
                     type="radio"
                     name="flight_selector"
-                    id="{{ f.code }}-{{ class.type }}"
-                    value="{{ f.code }}-{{ class.type }}"
+                    id="{{ flight.code }}-E"
+                    value="{{ flight.code }}-E"
                     required
                     onclick=' $("#book_button").removeAttr("disabled");'
                   />
                   <img src="{% static 'economy.png' %}" width="30px" />
                   <span
-                    >{{ class.total_seats }} Seats Avilabe -
+                    >{{ seat_count.E }} Seats Avilabe -
                     <strong>Price:</strong> {{ class.price }} SR</span
                   >
                 </div>
-                {% elif class.type == 'B' %}
+                <!-- for business class -->
+                {% elif seat_count.B > 0 %}
                 <div
                   style="
                     width: 300px;
@@ -117,18 +119,18 @@
                   <input
                     type="radio"
                     name="flight_selector"
-                    id="{{ f.code }}-{{ class.type }}"
-                    value="{{ f.code }}-{{ class.type }}"
+                    id="{{ flight.code }}-B"
+                    value="{{ flight.code }}-B"
                     required
                     onclick=' $("#book_button").removeAttr("disabled");'
                   />
                   <img src="{% static 'business.png' %}" width="30px" />
                   <p>
-                    {{ class.total_seats }} Seats Avilabe -
+                    {{ seat_count.B }} Seats Avilabe -
                     <strong>Price:</strong> {{ class.price }} SR
                   </p>
                 </div>
-                {% endif %} {% endfor %}
+                {% endif %}
               </td>
             </div>
           </tr>
