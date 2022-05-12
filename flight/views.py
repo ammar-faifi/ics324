@@ -99,6 +99,7 @@ def get_cities(request: HttpRequest):
 
 def book(request: HttpRequest):
     d = request.POST
+    code, class_type = d.get('flight_selector').split('-')
     data = {
         'first_name': d.get('first-name'),
         'last_name': d.get('last-name'),
@@ -115,10 +116,21 @@ def book(request: HttpRequest):
         passenger = models.Passenger.objects.get_or_create(
             **data
         )
-        print(passenger)
+
+        # get the flight object chosen by user
+        flight = models.Flight.objects.get(code=code)
+        print(flight)
 
         # link to this passenger its ticket
-        
+        ticket = models.Ticket.objects.create(
+            code=models.get_random_unique_code(),
+            seat_number = models.get_random_seat_code(flight),
+            cost=flight.plane.model.class_info.get(type=class_type).price,
+            gate='G10',
+            passenger=passenger[0],
+            flight=flight,
+        )
+        print(ticket)
 
     except Exception as e: 
         print(e)
