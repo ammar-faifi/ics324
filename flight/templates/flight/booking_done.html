@@ -7,6 +7,29 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>Congrats you flight has been booked</h1>
-    <p> you will recieve a confirmation email soon</p>
+
+<div class="w3-content">
+  <div class="w3-container " >
+    <img src="{% static 'done.png' %}" width="200px" style="margin: auto;">
+  </div>
+  
+
+  <div class="w3-container">
+    <div class="w3-pannel w3-blue w3-border">
+      <h2>Success !</h2>
+      <p>Your booking Info</p>
+    </div>
+    <div class="w3-container w3-white">
+
+      <h1>Your booking number {{ ticket.code }} in the flight {{ flight.code }} was created.</h1>
+      <h2>You will more information through your email.</h2>
+
+
+
+      <a href="{% url 'flight:index' %}" type='button' class='w3-button w3-dark-blue m-3'>Book Another Flight</a>
+    </div>
+  </div>
+</div>
+
+
 {% endblock content %}

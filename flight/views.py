@@ -110,7 +110,6 @@ def book(request: HttpRequest):
         'special_need': d.get('special-needs', False),
     }
 
-    print(request.POST)
     try:
         # create the Passenger object
         passenger = models.Passenger.objects.get_or_create(
@@ -119,18 +118,17 @@ def book(request: HttpRequest):
 
         # get the flight object chosen by user
         flight = models.Flight.objects.get(code=code)
-        print(flight)
 
-        # link to this passenger its ticket
-        ticket = models.Ticket.objects.create(
-            code=models.get_random_unique_code(),
-            seat_number = models.get_random_seat_code(flight),
-            cost=flight.plane.model.class_info.get(type=class_type).price,
-            gate='G10',
-            passenger=passenger[0],
-            flight=flight,
-        )
-        print(ticket)
+        # create for the passenger its ticket
+        # ticket = models.Ticket.objects.create(
+        #     code=models.get_random_unique_code(),
+        #     seat_number = models.get_random_seat_code(flight),
+        #     cost=flight.plane.model.class_info.get(type=class_type).price,
+        #     gate='G10',
+        #     passenger=passenger[0],
+        #     flight=flight,
+        # )
+        # print(ticket)
 
     except Exception as e: 
         print(e)
@@ -138,5 +136,8 @@ def book(request: HttpRequest):
     return render(
         request,
         'flight/booking_done.html',
-        context=None,
+        context={
+            # 'ticket': ticket,
+            'flight': flight,
+        },
     )
