@@ -220,21 +220,20 @@ class Ticket(Model):
             models.UniqueConstraint("seat_number", "flight", name='ticket_constraint')
         ]
 
-
     code = models.CharField(max_length=6, unique=True, blank=True)
     checked_in = models.BooleanField(default=False)
     seat_number = models.CharField(max_length=3)
     gate = models.CharField(max_length=50)
     class_type = models.CharField(max_length=50, choices=CLASSES)
-    weight = models.FloatField()
-    volume = models.FloatField()
-    qunatity = models.IntegerField()
-    successful = models.BooleanField()
-    purchase_date = models.DateField(auto_now=False, auto_now_add=True)
+    weight = models.FloatField(default=0)
+    volume = models.FloatField(default=0)
+    qunatity = models.IntegerField(default=0)
+    successful = models.BooleanField(default=False)
+    purchase_date = models.DateField(auto_now=False, auto_now_add=True, null=True)
     cost = models.FloatField()
 
     passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)  # pssn
-    transaction = models.ForeignKey(Payment, on_delete=models.CASCADE)
+    transaction = models.ForeignKey(Payment, on_delete=models.CASCADE, null=True, blank=True)
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -246,6 +245,15 @@ def get_random_unique_code():
     while exists:
         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
         exists = Ticket.objects.filter(code=code).exists()
+        if not exists:
+            return code
+
+def get_random_seat_code(flight: Flight):
+    exists = True
+    while exists:
+        letters = ['A', 'B', 'C', 'D', 'E', 'F']
+        code = random.choices(letters, k=1)[0] + str(int(random.random() * 30)+1)
+        exists = Ticket.objects.filter(seat_number=code, flight=flight).exists()
         if not exists:
             return code
 
