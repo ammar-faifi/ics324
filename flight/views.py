@@ -135,7 +135,7 @@ def get_cities(request: HttpRequest):
 
 def book(request: HttpRequest):
     d = request.POST
-    code, class_type = d.get('flight_selector').split('-')
+    code, class_type, waitlist = d.get('flight_selector').split('-')
     data = {
         'first_name': d.get('first-name'),
         'last_name': d.get('last-name'),
@@ -155,28 +155,47 @@ def book(request: HttpRequest):
         # get the flight object chosen by user
         flight = models.Flight.objects.get(code=code)
 
-        # create for the passenger its ticket
-        ticket = models.Ticket.objects.create(
-            code=models.get_random_unique_code(),
-            seat_number = models.get_random_seat_code(flight),
-            cost=flight.plane.model.class_info.get(type=class_type).price,
-            class_type = class_type,
-            gate='G10',
-            passenger=passenger[0],
-            flight=flight,
-        )
+        if waitlist == 'F':
+            # create for the passenger its ticket
+            ticket = models.Ticket.objects.create(
+                code=models.get_random_unique_code(),
+                seat_number = models.get_random_seat_code(flight),
+                cost=flight.plane.model.class_info.get(type=class_type).price,
+                class_type = class_type,
+                gate='G10',
+                passenger=passenger[0],
+                flight=flight,
+            )
+
+            return render(
+                request,
+                'flight/booking_done.html',
+                context={
+                    'ticket': ticket,
+                    'flight': flight,
+                },
+            )
+
+        else:
+            # create the waitlist obj
+            waitlist_obj = models.WaitingList.objects.create(
+                passenger = passenger,
+                flight = flight,
+                class_type = class_type,
+            )
+            return render(
+                request,
+                'flight/booking_done.html',
+                context={
+                    'ticket': ticket,
+                    'flight': flight,
+                    'waitlist': waitlist_obj,
+                },
+            )
 
     except Exception as e: 
         print(e)
 
-    return render(
-        request,
-        'flight/booking_done.html',
-        context={
-            'ticket': ticket,
-            'flight': flight,
-        },
-    )
 
 
 def pay(request: HttpRequest):

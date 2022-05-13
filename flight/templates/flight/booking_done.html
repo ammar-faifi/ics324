@@ -21,8 +21,14 @@
     </div>
     <div class="w3-container w3-white">
 
-      <h1>Your booking number {{ ticket.code }} in the flight {{ flight.code }} was created.</h1>
-      <h2>You will more information through your email.</h2>
+      {% if waitlist %}
+      <h1>You are now in the waiting list in the flight number {{ flight.code }}.</h1>
+      <h2>You will recieve more information through your email once there is a seat available.</h2>
+      
+      {% else %}
+        <h1>Your booking number {{ ticket.code }} in the flight {{ flight.code }} was created.</h1>
+        <h2>You will more information through your email.</h2>
+      {% endif %}
 
 
 
