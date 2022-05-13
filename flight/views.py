@@ -50,13 +50,24 @@ class SearchFlight(View):
             for c, _ in models.CLASSES:
                 try:
                     total_seats = f.plane.model.class_info.filter(type=c)[0].total_seats
+                    remaining = total_seats - models.Ticket.objects.filter(class_type=c, flight=f).count()
                     price = f.plane.model.class_info.filter(type=c)[0].price
                 except:
-                    total_seats = 0
+                    remaining = 0
                     price = None
                     
-                result[-1][1][c] = total_seats - models.Ticket.objects.filter(class_type=c, flight=f).count()
-                result[-1][1][c+'_price'] = price
+                
+                if remaining > 0:
+                    result[-1][1][c] = remaining
+                    result[-1][1][c+'_price'] = price
+                else:
+                    class_waiting = models.WaitingList.objects.filter(flight=f, class_type=c).count()
+                    if c == 'E':
+                        bussiness_rule = 10 - class_waiting # remaining waitlist positins
+                    else: # 'F' & 'B'
+                        bussiness_rule = 3 - class_waiting
+
+                    result[-1][1][c+'_waitlist'] = bussiness_rule
 
 
         return render(

@@ -39,7 +39,7 @@
           <tr>
             <td><strong>Flight Number</strong></td>
             <td><strong>Departure Time</strong></td>
-            <td><strong>Avilabe Classes</strong></td>
+            <td><strong>Available Classes</strong></td>
           </tr>
           {% for flight, seat_count in result %}
           <tr>
@@ -75,13 +75,36 @@
                     required
                     onclick=' $("#book_button").removeAttr("disabled");'
                   />
-                  <img src="{% static 'first.png' %}" width="30px" />
+                  <img src="{% static 'first.png' %}" width="30px" style="margin: 5px;"/>
                   <span
-                    >{{ seat_count.F }} Seats Avilabe -
+                    >{{ seat_count.F }} Seats Available -
                     <strong>Price:</strong> {{ seat_count.F_price }} SR</span
                   >
-                </div>
+                </div>       
+                {% elif seat_count.F_waitlist > 0 %}         
+                <div
+                  style="
+                    width: 300px;
+                    height: 50px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="flight_selector"
+                    id="{{ flight.code }}-F"
+                    value="{{ flight.code }}-F"
+                    required
+                    onclick=' $("#book_button").removeAttr("disabled");'
+                  />
+                  <img src="{% static 'first.png' %}" width="30px" style="margin: 5px;"style="margin: 5px;"/>
+                  <p>{{ seat_count.F_waitlist }} Wait Seats Available </p>
+                </div>     
                 {% endif %}
+
                 <!-- for economy class-->
                 {% if seat_count.E > 0 %}
                 <div
@@ -102,11 +125,33 @@
                     required
                     onclick=' $("#book_button").removeAttr("disabled");'
                   />
-                  <img src="{% static 'economy.png' %}" width="30px" />
+                  <img src="{% static 'economy.png' %}" width="30px" style="margin: 5px;"/>
                   <span
-                    >{{ seat_count.E }} Seats Avilabe -
+                    >{{ seat_count.E }} Seats Available -
                     <strong>Price:</strong> {{ seat_count.E_price }} SR</span
                   >
+                </div>
+                {% elif seat_count.E_waitlist > 0 %}
+                <div
+                  style="
+                    width: 300px;
+                    height: 50px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="flight_selector"
+                    id="{{ flight.code }}-E"
+                    value="{{ flight.code }}-E"
+                    required
+                    onclick=' $("#book_button").removeAttr("disabled");'
+                  />
+                  <img src="{% static 'economy.png' %}" width="30px" style="margin: 5px;"/>
+                  <p>{{ seat_count.E_waitlist }} Wait Seats Available </p>
                 </div>
                 {% endif %}
                 <!-- for business class -->
@@ -129,10 +174,34 @@
                     required
                     onclick=' $("#book_button").removeAttr("disabled");'
                   />
-                  <img src="{% static 'business.png' %}" width="30px" />
+                  <img src="{% static 'business.png' %}" width="30px" style="margin: 5px;"/>
                   <p>
-                    {{ seat_count.B }} Seats Avilabe -
+                    {{ seat_count.B }} Seats Available -
                     <strong>Price:</strong> {{ seat_count.B_price }} SR
+                  </p>
+                </div>
+                {% elif seat_count.B_waitlist > 0 %}
+                <div
+                  style="
+                    width: 300px;
+                    height: 50px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="flight_selector"
+                    id="{{ flight.code }}-B"
+                    value="{{ flight.code }}-B"
+                    required
+                    onclick=' $("#book_button").removeAttr("disabled");'
+                  />
+                  <img src="{% static 'business.png' %}" width="30px" style="margin: 5px;"/>
+                  <p>
+                    {{ seat_count.B_waitlist }} Wait Seats Available
                   </p>
                 </div>
                 {% endif %}
