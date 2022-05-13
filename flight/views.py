@@ -179,7 +179,7 @@ def book(request: HttpRequest):
         else:
             # create the waitlist obj
             waitlist_obj = models.WaitingList.objects.create(
-                passenger = passenger,
+                passenger = passenger[0],
                 flight = flight,
                 class_type = class_type,
             )
@@ -187,7 +187,6 @@ def book(request: HttpRequest):
                 request,
                 'flight/booking_done.html',
                 context={
-                    'ticket': ticket,
                     'flight': flight,
                     'waitlist': waitlist_obj,
                 },
