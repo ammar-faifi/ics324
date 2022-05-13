@@ -167,6 +167,13 @@ def book(request: HttpRequest):
                 flight=flight,
             )
 
+            send_mail(
+                subject='Booking Confirmation',
+                from_email=None,
+                message=f'Hi, {passenger[0].last_name} \nyou just booked in the flight {flight.code}, with booking number {ticket.code}',
+                recipient_list=[passenger[0].email],
+            )
+
             return render(
                 request,
                 'flight/booking_done.html',
@@ -182,6 +189,12 @@ def book(request: HttpRequest):
                 passenger = passenger[0],
                 flight = flight,
                 class_type = class_type,
+            )
+            send_mail(
+                subject='Booking Wait List Confirmation',
+                from_email=None,
+                message=f'Hi, {passenger[0].last_name} \nyou just are added to the wait list in the flight {flight.code}.',
+                recipient_list=[passenger[0].email],
             )
             return render(
                 request,
