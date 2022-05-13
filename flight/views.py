@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.views.generic.base import TemplateView, View
 from django.http.request import HttpRequest
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 
 from . import models
 from data import cities
@@ -171,6 +172,7 @@ def pay(request: HttpRequest):
 
     d = request.POST
     method = d.get('method')
+    passenger = d.get('passenger')
 
     match method:
         case 'CashMethod':
@@ -185,9 +187,17 @@ def pay(request: HttpRequest):
             raise Exception("No accepted input found")
     
     payment = models.Payment.objects.create(
-        paid_by = d.get('passenger')
+        paid_by = passenger
     )
 
+    send_mail(
+        'Your Booking Information',
+        """Your Booking {} is confirmed.
+        """,
+        'no-reply@ammarf.com',
+        passenger.email,
+        fail_silently=False,
+    )
 
 
     return render(
