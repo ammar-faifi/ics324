@@ -25,12 +25,10 @@ Booking{%endblock title %} {% block content %}
   <div class="w3-row w3-border">
     <div class="w3-row">
       <div class="w3-col l4 w3-container">
-        <strong class="w3-large">Name: </strong> {{ ticket.passenger.last_name
-        }}, {{ ticket.passenger.first_name }}
+        <strong class="w3-large">Name: </strong> {{ ticket.passenger.last_name }}, {{ ticket.passenger.first_name }}
       </div>
       <div class="w3-col l4 w3-container">
-        <strong class="w3-large">Birth Date: </strong> {{
-        ticket.passenger.birth_date }}
+        <strong class="w3-large">Birth Date: </strong> {{ ticket.passenger.birth_date }}
       </div>
       <div class="w3-col l4 w3-container">
         <strong class="w3-large">Phone: </strong> {{ ticket.passenger.phone }}
@@ -39,8 +37,7 @@ Booking{%endblock title %} {% block content %}
 
     <div class="w3-row">
       <div class="w3-col l4 w3-container">
-        <strong class="w3-large">Address: </strong> {{ ticket.passenger.address
-        }}
+        <strong class="w3-large">Address: </strong> {{ ticket.passenger.address }}
       </div>
       <div class="w3-col l4 w3-container">
         <strong class="w3-large">Email: </strong> {{ ticket.passenger.email }}
@@ -76,8 +73,7 @@ Booking{%endblock title %} {% block content %}
             <strong class="w3-large">Flight: </strong> {{ ticket.flight.code }}
           </div>
           <div class="w3-col l4 w3-container">
-            <strong class="w3-large">Flight Time: </strong> {{
-            ticket.flight.time }}
+            <strong class="w3-large">Flight Time: </strong> {{ ticket.flight.time }}
           </div>
         </div>
       </div>
