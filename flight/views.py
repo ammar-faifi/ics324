@@ -165,3 +165,38 @@ def book(request: HttpRequest):
             'flight': flight,
         },
     )
+
+
+def pay(request: HttpRequest):
+
+    d = request.POST
+    method = d.get('method')
+
+    match method:
+        case 'CashMethod':
+            obj = models.CashMethod.objects.create()
+        case 'ApplePayMethod': 
+            obj = models.ApplePayMethod.objects.create()
+        case 'PaypalMethod': 
+            obj = models.PaypalMethod.objects.create()
+        case 'CreditCardMethod': 
+            obj = models.CreditCardMethod.objects.create()
+        case _:
+            raise Exception("No accepted input found")
+    
+    payment = models.Payment.objects.create(
+        paid_by = d.get('passenger')
+    )
+
+
+
+    return render(
+        request,
+        'flight/pay_done.html',
+        context={
+            'payment': payment,
+            # 'ticket': ticket,
+        },
+    )
+
+    
