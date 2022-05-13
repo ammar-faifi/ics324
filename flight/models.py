@@ -159,7 +159,9 @@ class Payment(Model):
     the primary key is the django default `id`
     """
 
-    tax = models.FloatField()
+    tax = models.FloatField(default=0.0, blank=True)
+
+    paid_by = models.ForeignKey("flight.passenger", on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _("payment")
