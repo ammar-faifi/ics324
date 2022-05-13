@@ -87,7 +87,7 @@ class ManageBooking(View):
 
         return render(
             request,
-            'flight/booking.html',
+            'flight/manage.html',
             context={'ticket': ticket}
         )
 

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Manage Booking{% endblock title %}
+
+{% block content %}
+
+<div class="w3-container p-28">
+    <div class="w3-container w3-blue p-10">
+        <h1 class="w3-center w3-xxlarge">Manage Your Booking </h1>
+    </div>
+    
+    <div class="w3-container p-4">
+        Welcome <strong>{{ ticket.passenger.last_name }}</strong>, you can manage your booking <strong> {{ ticket.code }}</strong> here.
+        <br>
+        Please review you information below.
+    </div>
+
+    <div class="w3-container w3-blue">
+    </div>
+    
+    <!-- Passenger info -->
+    <div class="w3-container w3-light-blue w3-center w3-large">
+        Passenger Information
+    </div>
+
+    <div class="w3-row w3-border">
+        <div class="w3-row">
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Name: </strong> {{ ticket.passenger.last_name }}, {{ ticket.passenger.first_name }}
+            </div>
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Birth Date: </strong> {{ ticket.passenger.birth_date }}
+            </div>
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Phone: </strong> {{ ticket.passenger.phone }}
+            </div>
+        </div>
+        
+        <div class="w3-row">
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Address: </strong> {{ ticket.passenger.address }}
+            </div>
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Email: </strong> {{ ticket.passenger.email }}
+            </div>
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Specail Nedd: </strong> 
+                {% if ticket.passenger.special_need %} Yes {% else %} No {% endif %}
+            </div>
+        </div>
+    <div>
+        
+    <!-- Ticket info -->
+    <div class="w3-container w3-light-blue w3-center w3-large">
+        Passenger Information
+    </div>
+
+    <div class="w3-row w3-border">
+        <div class="w3-row">
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Code: </strong> {{ ticket.code }}
+            </div>
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Seat: </strong> {{ ticket.seat_number }}
+            </div>
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Gate: </strong> {{ ticket.gate }}
+            </div>
+        </div>
+        <div class="w3-row">
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Class: </strong> {{ ticket.class_type }}
+            </div>
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Flight: </strong> {{ ticket.flight.code }}
+            </div>
+            <div class="w3-col l4 w3-container">
+                <strong class="w3-large">Flight Time: </strong> {{ ticket.flight.time }}
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Payment form -->
+    <div class="w3-container w3-light-blue w3-center w3-large">
+        Payment
+    </div>
+    <p>To check in you booking, fill in your payment method</p>
+
+    <form action="" method="post" class="w3-container w3-border">
+        <label for="tax">Tax</label>
+        <input type="text" id="tax" value="0.0" disabled class="w3-input">
+    </form>
+
+
+</div>
+
+
+{% endblock content %}
