@@ -1,103 +1,209 @@
 <!DOCTYPE html>
 
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %} Manage Booking{% endblock title %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %} Manage Booking{%
+endblock title %} {% block content %}
 
 <div class="w3-container p-28">
-    <div class="w3-container w3-blue p-10">
-        <h1 class="w3-center w3-xxlarge">Manage Your Booking </h1>
-    </div>
-    
-    <div class="w3-container p-4">
-        Welcome <strong>{{ ticket.passenger.last_name }}</strong>, you can manage your booking <strong> {{ ticket.code }}</strong> here.
-        <br>
-        Please review you information below.
+  <div class="w3-container w3-blue p-10">
+    <h1 class="w3-center w3-xxlarge">Manage Your Booking</h1>
+  </div>
+
+  <div class="w3-container p-4">
+    Welcome <strong>{{ ticket.passenger.last_name }}</strong>, you can manage
+    your booking <strong> {{ ticket.code }}</strong> here.
+    <br />
+    Please review you information below.
+  </div>
+
+  <div class="w3-container w3-blue"></div>
+
+  <!-- Passenger info -->
+  <div class="w3-container w3-light-blue w3-center w3-large">
+    Passenger Information
+  </div>
+
+  <div class="w3-row w3-border">
+    <div class="w3-row">
+      <div class="w3-col l4 w3-container">
+        <strong class="w3-large">Name: </strong> {{ ticket.passenger.last_name
+        }}, {{ ticket.passenger.first_name }}
+      </div>
+      <div class="w3-col l4 w3-container">
+        <strong class="w3-large">Birth Date: </strong> {{
+        ticket.passenger.birth_date }}
+      </div>
+      <div class="w3-col l4 w3-container">
+        <strong class="w3-large">Phone: </strong> {{ ticket.passenger.phone }}
+      </div>
     </div>
 
-    <div class="w3-container w3-blue">
+    <div class="w3-row">
+      <div class="w3-col l4 w3-container">
+        <strong class="w3-large">Address: </strong> {{ ticket.passenger.address
+        }}
+      </div>
+      <div class="w3-col l4 w3-container">
+        <strong class="w3-large">Email: </strong> {{ ticket.passenger.email }}
+      </div>
+      <div class="w3-col l4 w3-container">
+        <strong class="w3-large">Specail Nedd: </strong>
+        {% if ticket.passenger.special_need %} Yes {% else %} No {% endif %}
+      </div>
     </div>
-    
-    <!-- Passenger info -->
-    <div class="w3-container w3-light-blue w3-center w3-large">
-        Passenger Information
-    </div>
-
-    <div class="w3-row w3-border">
-        <div class="w3-row">
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Name: </strong> {{ ticket.passenger.last_name }}, {{ ticket.passenger.first_name }}
-            </div>
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Birth Date: </strong> {{ ticket.passenger.birth_date }}
-            </div>
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Phone: </strong> {{ ticket.passenger.phone }}
-            </div>
-        </div>
-        
-        <div class="w3-row">
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Address: </strong> {{ ticket.passenger.address }}
-            </div>
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Email: </strong> {{ ticket.passenger.email }}
-            </div>
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Specail Nedd: </strong> 
-                {% if ticket.passenger.special_need %} Yes {% else %} No {% endif %}
-            </div>
-        </div>
     <div>
-        
-    <!-- Ticket info -->
-    <div class="w3-container w3-light-blue w3-center w3-large">
+      <!-- Ticket info -->
+      <div class="w3-container w3-light-blue w3-center w3-large">
         Passenger Information
-    </div>
+      </div>
 
-    <div class="w3-row w3-border">
+      <div class="w3-row w3-border">
         <div class="w3-row">
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Code: </strong> {{ ticket.code }}
-            </div>
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Seat: </strong> {{ ticket.seat_number }}
-            </div>
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Gate: </strong> {{ ticket.gate }}
-            </div>
+          <div class="w3-col l4 w3-container">
+            <strong class="w3-large">Code: </strong> {{ ticket.code }}
+          </div>
+          <div class="w3-col l4 w3-container">
+            <strong class="w3-large">Seat: </strong> {{ ticket.seat_number }}
+          </div>
+          <div class="w3-col l4 w3-container">
+            <strong class="w3-large">Gate: </strong> {{ ticket.gate }}
+          </div>
         </div>
         <div class="w3-row">
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Class: </strong> {{ ticket.class_type }}
-            </div>
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Flight: </strong> {{ ticket.flight.code }}
-            </div>
-            <div class="w3-col l4 w3-container">
-                <strong class="w3-large">Flight Time: </strong> {{ ticket.flight.time }}
-            </div>
+          <div class="w3-col l4 w3-container">
+            <strong class="w3-large">Class: </strong> {{ ticket.class_type }}
+          </div>
+          <div class="w3-col l4 w3-container">
+            <strong class="w3-large">Flight: </strong> {{ ticket.flight.code }}
+          </div>
+          <div class="w3-col l4 w3-container">
+            <strong class="w3-large">Flight Time: </strong> {{
+            ticket.flight.time }}
+          </div>
         </div>
+      </div>
+
+      <!-- Payment form -->
+      <div class="w3-container w3-light-blue w3-center w3-large">Payment</div>
+      <p>To check in you booking, fill in your payment method</p>
+
+      <div class="w3-bar w3-black">
+        <button
+          class="w3-bar-item w3-button tablink w3-red"
+          onclick="openCity(event,'Cash')"
+        >
+          Cash
+        </button>
+        <button
+          class="w3-bar-item w3-button tablink"
+          onclick="openCity(event,'ApplePay')"
+        >
+          ApplePay
+        </button>
+        <button
+          class="w3-bar-item w3-button tablink"
+          onclick="openCity(event,'Paypal')"
+        >
+          Paypal
+        </button>
+        <button
+          class="w3-bar-item w3-button tablink"
+          onclick="openCity(event,'CreditCard')"
+        >
+          CreditCard
+        </button>
+      </div>
+
+      <form action="" method="post" class="w3-container w3-border">
+        <div id="Cash" class="w3-container w3-border city">
+          <h2>Cash</h2>
+          <button class="w3-button w3-dark-grey m-3">Complete Payment</button>
+        </div>
+
+        <div
+          id="ApplePay"
+          class="w3-container w3-border city"
+          style="display: none"
+        >
+          <h2>ApplePay</h2>
+          <label class="p-2">apple_id</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="text"
+            name="apple_id"
+            required
+          />
+          <label class="p-2">device</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="text"
+            name="device"
+            required
+          />
+          <button class="w3-button w3-dark-grey m-3">Complete Payment</button>
+        </div>
+
+        <div
+          id="Paypal"
+          class="w3-container w3-border city"
+          style="display: none"
+        >
+          <h2>Paypal</h2>
+          <label class="p-2">account_id</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="text"
+            name="account_id"
+            required
+          />
+          <button class="w3-button w3-dark-grey m-3">Complete Payment</button>
+        </div>
+
+        <div
+          id="CreditCard"
+          class="w3-container w3-border city"
+          style="display: none"
+        >
+          <h2>CreditCard</h2>
+          <label class="p-2">name</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="text"
+            name="payment-name"
+            required
+          />
+          <label class="p-2">number</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="text"
+            name="payment-number"
+            required
+          />
+          <label class="p-2">expire_date</label>
+          <input
+            class="w3-input w3-border inline m-2 max-w-fit"
+            type="date"
+            name="expire_date"
+            required
+          />
+          <button class="w3-button w3-dark-grey m-3">Complete Payment</button>
+        </div>
+      </form>
     </div>
-
-    
-
-    <!-- Payment form -->
-    <div class="w3-container w3-light-blue w3-center w3-large">
-        Payment
-    </div>
-    <p>To check in you booking, fill in your payment method</p>
-
-    <form action="" method="post" class="w3-container w3-border">
-        <label for="tax">Tax</label>
-        <input type="text" id="tax" value="0.0" disabled class="w3-input">
-    </form>
-
-
+  </div>
 </div>
-
-
+<script>
+  function openCity(evt, cityName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("city");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " w3-red";
+  }
+</script>
 {% endblock content %}
