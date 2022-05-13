@@ -42,7 +42,6 @@ class SearchFlight(View):
         }
 
         flights = models.Flight.objects.filter(**data)
-        print(flights)
 
         result = []
         for f in flights:
@@ -57,7 +56,6 @@ class SearchFlight(View):
                     
                 result[-1][1][c] = total_seats - models.Ticket.objects.filter(class_type=c, flight=f).count()
                 result[-1][1][c+'_price'] = price
-        print(result)
 
 
         return render(
@@ -102,13 +100,19 @@ def get_cities(request: HttpRequest):
     if source:
         arrival_cities = models.Flight.objects.filter(source_city=source).only('destination')
         for q in arrival_cities:
-            cities_list.append({'code': q.destination, 'city': q.get_destination_display()})
+            city = {'code': q.destination, 'city': q.get_destination_display()}
+            if city not in cities_list:
+                cities_list.append(city)
+        
         return JsonResponse(cities_list, safe=False)
     
     elif arrival:
         soure_cities = models.Flight.objects.filter(destination=source).values_list('source_city', flat=True)
         for q in soure_cities:
-            cities_list.append({'code': q.source_city, 'city': q.get_source_city_display()})
+            city = {'code': q.source_city, 'city': q.get_source_city_display()}
+            if city not in cities_list:
+                cities_list.append(city)
+
         return JsonResponse(cities_list, safe=False)
     
     else:
