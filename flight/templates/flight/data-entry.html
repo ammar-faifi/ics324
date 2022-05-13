@@ -75,11 +75,12 @@
                   <img src="{% static 'first.png' %}" width="30px" />
                   <span
                     >{{ seat_count.F }} Seats Avilabe -
-                    <strong>Price:</strong> {{ class.price }} SR</span
+                    <strong>Price:</strong> {{ seat_count.F_price }} SR</span
                   >
                 </div>
+                {% endif %}
                 <!-- for economy class-->
-                {% elif seat_count.E > 0 %}
+                {% if seat_count.E > 0 %}
                 <div
                   style="
                     width: 300px;
@@ -101,11 +102,12 @@
                   <img src="{% static 'economy.png' %}" width="30px" />
                   <span
                     >{{ seat_count.E }} Seats Avilabe -
-                    <strong>Price:</strong> {{ class.price }} SR</span
+                    <strong>Price:</strong> {{ seat_count.E_price }} SR</span
                   >
                 </div>
+                {% endif %}
                 <!-- for business class -->
-                {% elif seat_count.B > 0 %}
+                {% if seat_count.B > 0 %}
                 <div
                   style="
                     width: 300px;
@@ -127,7 +129,7 @@
                   <img src="{% static 'business.png' %}" width="30px" />
                   <p>
                     {{ seat_count.B }} Seats Avilabe -
-                    <strong>Price:</strong> {{ class.price }} SR
+                    <strong>Price:</strong> {{ seat_count.B_price }} SR
                   </p>
                 </div>
                 {% endif %}

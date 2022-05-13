@@ -50,10 +50,13 @@ class SearchFlight(View):
             for c, _ in models.CLASSES:
                 try:
                     total_seats = f.plane.model.class_info.filter(type=c)[0].total_seats
+                    price = f.plane.model.class_info.filter(type=c)[0].price
                 except:
                     total_seats = 0
+                    price = None
                     
                 result[-1][1][c] = total_seats - models.Ticket.objects.filter(class_type=c, flight=f).count()
+                result[-1][1][c+'_price'] = price
         print(result)
 
 
