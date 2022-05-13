@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
-{% extends 'base.html' %} {% load static %} {% block title %} Manage Booking{%
-endblock title %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %} Manage
+Booking{%endblock title %} {% block content %}
 
 <div class="w3-container p-28">
   <div class="w3-container w3-blue p-10">
@@ -88,7 +88,7 @@ endblock title %} {% block content %}
 
       <div class="w3-bar w3-black">
         <button
-          class="w3-bar-item w3-button tablink w3-red"
+          class="w3-bar-item w3-button tablink w3-light-blue"
           onclick="openCity(event,'Cash')"
         >
           Cash
@@ -114,25 +114,21 @@ endblock title %} {% block content %}
       </div>
 
       <form action="" method="post" class="w3-container w3-border">
-        <div id="Cash" class="w3-container w3-border city">
+        <div id="Cash" class="w3-container city">
           <h2>Cash</h2>
           <button class="w3-button w3-dark-grey m-3">Complete Payment</button>
         </div>
 
-        <div
-          id="ApplePay"
-          class="w3-container w3-border city"
-          style="display: none"
-        >
+        <div id="ApplePay" class="w3-container city" style="display: none">
           <h2>ApplePay</h2>
-          <label class="p-2">apple_id</label>
+          <label class="p-2">Apple Id</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="text"
             name="apple_id"
             required
           />
-          <label class="p-2">device</label>
+          <label class="p-2">Device</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="text"
@@ -142,13 +138,9 @@ endblock title %} {% block content %}
           <button class="w3-button w3-dark-grey m-3">Complete Payment</button>
         </div>
 
-        <div
-          id="Paypal"
-          class="w3-container w3-border city"
-          style="display: none"
-        >
+        <div id="Paypal" class="w3-container city" style="display: none">
           <h2>Paypal</h2>
-          <label class="p-2">account_id</label>
+          <label class="p-2">Account Id</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="text"
@@ -158,27 +150,23 @@ endblock title %} {% block content %}
           <button class="w3-button w3-dark-grey m-3">Complete Payment</button>
         </div>
 
-        <div
-          id="CreditCard"
-          class="w3-container w3-border city"
-          style="display: none"
-        >
+        <div id="CreditCard" class="w3-container city" style="display: none">
           <h2>CreditCard</h2>
-          <label class="p-2">name</label>
+          <label class="p-2">Name</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="text"
             name="payment-name"
             required
           />
-          <label class="p-2">number</label>
+          <label class="p-2">Card Number</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="text"
             name="payment-number"
             required
           />
-          <label class="p-2">expire_date</label>
+          <label class="p-2">Expire Date</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="date"
@@ -200,10 +188,13 @@ endblock title %} {% block content %}
     }
     tablinks = document.getElementsByClassName("tablink");
     for (i = 0; i < x.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+      tablinks[i].className = tablinks[i].className.replace(
+        " w3-light-blue",
+        ""
+      );
     }
     document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " w3-red";
+    evt.currentTarget.className += " w3-light-blue";
   }
 </script>
 {% endblock content %}

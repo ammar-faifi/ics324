@@ -1,6 +1,5 @@
 cities = [
     ('GIZ', 'Gizan'),
-    ('DMM', 'Dammam'),
     ('AHB', 'Abha'),
     ('ABT', 'Al-Baha'),
     ('HOF', 'Alahsa'),

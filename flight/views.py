@@ -20,7 +20,7 @@ import flight
 
 class IndexView(TemplateView):
 
-    template_name = "flight/index.html"
+    template_name = "flight/index.html" 
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -90,7 +90,7 @@ class ManageBooking(View):
         except ObjectDoesNotExist:
             return render(
                 request,
-                'flight/index.html',
+                'flight/manage.html', #comm
                 context={'message': 'We did not find your booking.'}
                 )
         
