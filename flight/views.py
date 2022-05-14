@@ -73,12 +73,18 @@ class SearchFlight(View):
 
                     result[-1][1][c + "_waitlist"] = bussiness_rule
 
+        seats_list = []
+        for n in range(1, 31):
+            for l in ['A', 'B', 'C', 'D', 'E', 'F']:
+                seats_list.append(l + str(n))
+
         return render(
             request,
             "flight/data-entry.html",
             context={
                 "flights": flights,
                 "result": result,
+                'seats_list': seats_list,
             }
             | data,
         )

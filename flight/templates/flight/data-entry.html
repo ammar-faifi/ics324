@@ -213,6 +213,19 @@
           {% endfor %}
         </table>
 
+        <div class="w3-row">
+          <div class="w3-col l6 ">
+            <select name="seat" id="seat_input" class="w3-select">              
+              <option value="">Select a Seat</option>
+              {% for seat in seats_list %}
+              <option value="{{ seat }}">{{ seat }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <br>
+
         <button disabled type="button" class="w3-button w3-dark-grey block m-3" id="book_button">
           Book Selected Flight
         </button>
