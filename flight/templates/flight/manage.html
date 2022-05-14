@@ -78,6 +78,9 @@ Booking{%endblock title %} {% block content %}
         </div>
       </div>
 
+
+      <br><br>
+
       <!-- Payment form -->
       <div class="w3-container w3-light-blue w3-center w3-large">Payment</div>
       <p>To check in you booking, fill in your payment method</p>
@@ -85,100 +88,95 @@ Booking{%endblock title %} {% block content %}
       <div class="w3-bar w3-black">
         <button
           class="w3-bar-item w3-button tablink w3-light-blue"
-          onclick="openCity(event,'Cash')"
+          onclick="selectMethod(event,'Cash')"
         >
           Cash
         </button>
         <button
           class="w3-bar-item w3-button tablink"
-          onclick="openCity(event,'ApplePay')"
+          onclick="selectMethod(event,'ApplePay')"
         >
           ApplePay
         </button>
         <button
           class="w3-bar-item w3-button tablink"
-          onclick="openCity(event,'Paypal')"
+          onclick="selectMethod(event,'Paypal')"
         >
           Paypal
         </button>
         <button
           class="w3-bar-item w3-button tablink"
-          onclick="openCity(event,'CreditCard')"
+          onclick="selectMethod(event,'CreditCard')"
         >
           CreditCard
         </button>
       </div>
 
-      <form action="" method="post" class="w3-container w3-border">
-        <div id="Cash" class="w3-container city">
+      <form action="{% url 'flight:pay' %}" method="post" class="w3-container w3-border">
+        <div id="Cash" class="w3-container method">
           <h2>Cash</h2>
-          <button class="w3-button w3-dark-grey m-3">Complete Payment</button>
         </div>
 
-        <div id="ApplePay" class="w3-container city" style="display: none">
+        <div id="ApplePay" class="w3-container method" style="display: none">
           <h2>ApplePay</h2>
           <label class="p-2">Apple Id</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="text"
             name="apple_id"
-            required
           />
           <label class="p-2">Device</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="text"
             name="device"
-            required
           />
-          <button class="w3-button w3-dark-grey m-3">Complete Payment</button>
         </div>
 
-        <div id="Paypal" class="w3-container city" style="display: none">
+        <div id="Paypal" class="w3-container method" style="display: none">
           <h2>Paypal</h2>
           <label class="p-2">Account Id</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="text"
             name="account_id"
-            required
           />
-          <button class="w3-button w3-dark-grey m-3">Complete Payment</button>
         </div>
 
-        <div id="CreditCard" class="w3-container city" style="display: none">
+        <div id="CreditCard" class="w3-container method" style="display: none">
           <h2>CreditCard</h2>
           <label class="p-2">Name</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="text"
             name="payment-name"
-            required
           />
           <label class="p-2">Card Number</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="text"
             name="payment-number"
-            required
           />
           <label class="p-2">Expire Date</label>
           <input
             class="w3-input w3-border inline m-2 max-w-fit"
             type="date"
             name="expire_date"
-            required
           />
-          <button class="w3-button w3-dark-grey m-3">Complete Payment</button>
         </div>
+
+        <button class="w3-button w3-dark-grey m-3" type="submit">Complete Payment</button>
+        <input type="hidden" id="method_input" name="method" value="Cash">
+        <input type="hidden" id="ticket_input" name="ticket" value="{{ ticket.id }}">
+        {% csrf_token %}
       </form>
     </div>
   </div>
 </div>
 <script>
-  function openCity(evt, cityName) {
+  function selectMethod(evt, method) {
     var i, x, tablinks;
-    x = document.getElementsByClassName("city");
+    x = document.getElementsByClassName("method");
     for (i = 0; i < x.length; i++) {
       x[i].style.display = "none";
     }
@@ -189,8 +187,10 @@ Booking{%endblock title %} {% block content %}
         ""
       );
     }
-    document.getElementById(cityName).style.display = "block";
+    document.getElementById(method).style.display = "block";
     evt.currentTarget.className += " w3-light-blue";
+
+    $("#method_input").val(method);
   }
 </script>
 {% endblock content %}

@@ -217,29 +217,44 @@ def pay(request: HttpRequest):
 
     d = request.POST
     method = d.get("method")
-    passenger = d.get("passenger")
+
+    ticket = models.Ticket.objects.get(pk=d.get("ticket"))
+
+    payment = models.Payment.objects.create(paid_by=ticket.passenger)
 
     match method:
-        case "CashMethod":
-            obj = models.CashMethod.objects.create()
-        case "ApplePayMethod":
-            obj = models.ApplePayMethod.objects.create()
-        case "PaypalMethod":
-            obj = models.PaypalMethod.objects.create()
-        case "CreditCardMethod":
-            obj = models.CreditCardMethod.objects.create()
+        case "Cash":
+            obj = models.CashMethod.objects.create(
+                payment = payment,
+            )
+        case "ApplePay":
+            obj = models.ApplePayMethod.objects.create(
+                payment = payment,
+                apple_id = d.get('apple_id'),
+                device = d.get('device'),
+            )
+        case "Paypal":
+            obj = models.PaypalMethod.objects.create(
+                payment = payment,
+                account_id = d.get('account_id')
+            )
+        case "CreditCard":
+            obj = models.CreditCardMethod.objects.create(
+                payment = payment,
+                name = d.get('payment-name'),
+                number = d.get('payment-number'),
+                expire_date = d.get('expire_date'),
+            )
         case _:
             raise Exception("No accepted input found")
 
-    payment = models.Payment.objects.create(paid_by=passenger)
-
     send_mail(
-        "Your Booking Information",
-        """Your Booking {} is confirmed.
-        """,
-        "no-reply@ammarf.com",
-        passenger.email,
-        fail_silently=False,
+        subject= "Your Booking Information",
+        message= f"""Your Booking {ticket.code} is confirmed.
+            """,
+        from_email=None,
+        recipient_list= [ticket.passenger.email],
+        fail_silently= False,
     )
 
     return render(
@@ -247,6 +262,6 @@ def pay(request: HttpRequest):
         "flight/pay_done.html",
         context={
             "payment": payment,
-            # 'ticket': ticket,
+            'ticket': ticket,
         },
     )

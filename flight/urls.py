@@ -10,4 +10,5 @@ urlpatterns = [
     path('manage_booking', views.ManageBooking.as_view(), name='manage_booking'),
     path('get_cities', views.get_cities, name='get_cities'),
     path('book', views.book, name='book'),
+    path('pay', views.pay, name='pay'),
 ]
